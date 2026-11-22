@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROB RUN Collection Tracker</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--tx:#14171c;--mu:#5b6470;--bd:#d8dce2;--ac:#d93b30;--ok:#1b9a52;--gold:#b7791f;--chip:#eef0f3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--gold:#f2b84b;--chip:#222831;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--gold:#f2b84b;--chip:#222831;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Sarabun",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:24px;margin:4px 0}h2{font-size:17px;margin:22px 0 8px}h3{font-size:16px;margin:0}
+.sub{color:var(--mu);margin:0 0 14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:22px}.stat span{color:var(--mu);font-size:13px}
+.bar{height:8px;background:var(--chip);border-radius:6px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .25s}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;align-items:center}
+.tools input,.tools select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px}
+.tools input{flex:1;min-width:140px}
+button{cursor:pointer}button:hover{border-color:var(--ac)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.card.done{border-color:var(--ok)}.card.ontable{box-shadow:0 0 0 2px var(--ac)}
+.card header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.badge{font-size:12px;padding:2px 8px;border-radius:20px;background:var(--chip);color:var(--mu)}
+.badge.special{color:var(--gold)}.badge.unique{color:var(--ac)}
+.it{display:flex;gap:8px;align-items:center;cursor:pointer;padding:3px 0}
+.it input{width:18px;height:18px;accent-color:var(--ok)}
+.it.got span{text-decoration:line-through;color:var(--mu)}
+.cm{display:flex;align-items:center;gap:8px;font-size:14px;flex-wrap:wrap}
+.all{margin-left:auto;display:flex;gap:5px;align-items:center;cursor:pointer;font-size:13px}.all input{width:18px;height:18px;accent-color:var(--ok)}
+#rare{display:none!important}
+.cm button{padding:2px 10px}
+.meta{font-size:13px;color:var(--mu)}
+.meta b{color:var(--tx)}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:auto}
+.chip{font-size:12px;padding:3px 9px;border-radius:20px;background:var(--chip)}
+.chip.ok{background:var(--ok);color:#fff}
+.tb.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.step{display:flex;align-items:center;gap:8px;margin:6px 0}
+.step button{padding:2px 12px}
+details{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin:6px 0}
+summary{cursor:pointer;font-weight:600}
+ul{margin:8px 0 0;padding-left:20px}
+.note{font-size:12.5px;color:var(--mu);margin-top:20px}
+.timer{font-variant-numeric:tabular-nums}
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:10px}
+.slot{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;scroll-margin-top:12px}
+.slot.empty{opacity:.6;border-style:dashed}.slot.full{border-color:var(--ok);box-shadow:0 0 0 2px var(--ok)}
+.slot .sh{display:flex;justify-content:space-between;align-items:center}
+.big{font-size:40px;line-height:1}.ico{font-size:20px}
+.th{width:38px;height:38px;padding:0;border-radius:8px;overflow:hidden;flex:none;display:inline-grid;place-items:center;font-size:17px}.th img{width:100%;height:100%;object-fit:cover}
+.rmi{padding:0 6px;font-size:11px;border-radius:6px}
+.cs{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;width:100%}
+#plan{margin-bottom:12px}#io{width:100%;margin-top:8px;font:12px monospace;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--bd)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.pg{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:14px}
+.pgt{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mu);font-weight:600;font-size:14px;white-space:nowrap}
+.pgt:hover{color:var(--tx)}.pgt.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><nav class="pg"><a class="pgt on" aria-current="page">📋 Collection Tracker</a><a class="pgt" href="https://claude.ai/artifact/SHxnKzSQHErWNX8h3JJwbr" target="_blank" rel="noopener">💰 Run Planner</a></nav></header>
+<h1>🎭 ROB RUN Collection Tracker</h1>
+<p class="sub">ติ๊กไอเทมที่คุณมี เลือกชุดที่อยู่บน Collection Table ตอนนี้ และดูว่าชุดไหนพร้อม Pack ส่ง Smuggler แล้ว (บันทึกในเบราว์เซอร์อัตโนมัติ)</p>
+
+<div class="stats">
+<div class="stat"><b id="sDone">0/14</b><span>ชุดที่ครบ (จาก 34 ชุด)</span></div>
+<div class="stat"><b id="sItems">0/42</b><span>ไอเทมเฉพาะชุดที่มีแล้ว</span></div>
+<div class="stat"><b id="sMoney">$0</b><span>มูลค่า Crate ที่พร้อมขาย</span></div>
+<div class="stat"><b id="sNot">
+<select id="not"><option value="1">Lv 1 (+0%)</option><option value="2">Lv 2 (+5%)</option><option value="3">Lv 3 (+10%)</option><option value="4">Lv 4 (+15%)</option><option value="5">Lv 5 (+25%)</option></select></b><span>Notoriety (โบนัส Smuggler)</span></div>
+</div>
+<div class="bar"><i id="pbar"></i></div>
+<h2>🪑 โต๊ะของฉัน · ชุดที่อยู่บน Collection Table ตอนนี้</h2>
+<div class="slots" id="slots"></div>
+<div class="panel" id="plan"></div>
+
+<div class="tools">
+<div class="tabs" id="tabs">
+<button data-l="all" class="on">ทั้งหมด</button><button data-l="basic">Basic</button><button data-l="additional">Additional</button><button data-l="special">Special</button><button data-l="unique">Unique</button>
+</div>
+<input id="q" type="search" placeholder="ค้นหาไอเทม / ธีม เช่น Jewelry, Laptop">
+<select id="show"><option value="all">แสดงทุกชุด</option><option value="table">ชุดบนโต๊ะ</option><option value="todo">ที่ยังไม่ครบ</option><option value="done">ที่ครบแล้ว</option></select>
+<select id="sort"><option value="def">เรียงปกติ</option><option value="near">ใกล้ครบที่สุด</option><option value="cheap">ซื้อจากดีลเลอร์ถูกสุด</option><option value="fence">มูลค่า Fence สูงสุด</option></select>
+</div>
+
+<div class="panel" style="margin-bottom:12px">
+🔄 Refresh Collection: <button id="rf">กดเมื่อรีเฟรชชุดในเกมแล้ว</button>
+<span class="timer" id="rft" style="margin-left:8px;color:var(--mu)">พร้อมใช้งาน</span>
+<span style="float:right"><button id="th">🌓 ธีม</button> <button id="ex">📤 Export</button> <button id="im">📥 Import</button> <button id="rs">♻️ Reset</button></span>
+<textarea id="io" rows="3" hidden></textarea>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div id="rare" class="panel" style="margin-top:14px">
+<h3>ชุด Special และ Unique (ชุดละ 10 ชุด)</h3>
+<p class="meta">ต้องมีที่ดินในเขต Lv 2 / Lv 3 · ข้อมูลไอเทมในชุดนี้ยังไม่ได้ใส่ในเว็บ ให้ดูรายการเต็มที่ robrun.info หรือ Wikily แล้วนับจำนวนชุดที่ทำเสร็จตรงนี้</p>
+<div class="step">Special (Rare Crate $150,000) <button data-s="special" data-d="-1">−</button><b id="spN">0</b>/10<button data-s="special" data-d="1">+</button></div>
+<div class="step">Unique (Unique Crate $500,000) <button data-s="unique" data-d="-1">−</button><b id="unN">0</b>/10<button data-s="unique" data-d="1">+</button></div>
+</div>
+
+<h2>คู่มือย่อ</h2>
+<details open><summary>Collection Table ทำงานยังไง</summary><ul>
+<li>ปลดล็อกใน Shipments $5,000 แล้วซื้อ $15,000 ที่ Black Market (ต้องมีที่ดินของตัวเอง)</li>
+<li>โต๊ะมี 4 ลิสต์: Basic, Additional, Special, Unique แต่ละลิสต์แสดงทีละ 1 ชุด</li>
+<li>ไอเทมที่เข้าชุดจะมีไอคอนแว่นขยายในช่องเก็บของ</li>
+<li>ครบแล้วกด Pack ได้ Collection Crate ต้องเอาออกจากโต๊ะก่อน Pack ชุดถัดไป</li>
+<li>ขาย Crate ให้ Smuggler (ไม่ใช่ Fence) ได้ $50,000 ต่อ Crate เทียบกับ $1,100 – $2,600 ที่ Fence</li>
+</ul></details>
+<details><summary>เคล็ดลับ</summary><ul>
+<li>ซื้อไอเทมจากดีลเลอร์ตอนเป็น Citizen (ก่อนสวมหน้ากาก) ชุดที่ซื้อครบ 3 ชิ้นได้มี 7 ชุด ดูตัวเลข "ซื้อดีลเลอร์" ในการ์ด</li>
+<li>ไอเทมธรรมดา 10 ชิ้นต้องขโมยในอาคารที่ตรงธีม ไม่มีดีลเลอร์ขาย</li>
+<li>อย่าชักอาวุธตอนถือ Crate เพราะจะหล่น และตำรวจที่ยึด Crate ได้รับรางวัล</li>
+<li>Federal Raid (wipe) ทุก 7 วันลบฐานและโต๊ะ ขาย Crate ก่อน wipe</li>
+</ul></details>
+
+<p class="note">เว็บแฟนเมดที่ไม่เกี่ยวข้องกับ Kefir ข้อมูลชุดและราคามาจากข้อมูลที่ชุมชนอ่านจากตัวเกม (robrun.info, Wikily, robrun-wiki.com ณ 19 พ.ย. 2026) ยังไม่ได้ทดสอบในเกมทั้งหมด ราคา "ซื้อดีลเลอร์" บางชุดเป็นค่าประมาณ อาจเปลี่ยนตามแพตช์</p>
+</div>
+
+<script>
+const LN={basic:"Basic",additional:"Additional",special:"Special",unique:"Unique"};
+const VAL={basic:50000,additional:50000,special:150000,unique:500000};
+const BON=[0,0,.05,.10,.15,.25];
+const S0=(id,l,t,it,w,f,c,cn,d)=>({id,l,t,it,w,f,c,cn,d});
+const SETS=[
+S0("b1","basic","Alcohol",["Black Pirate Bottle","Severka Bottle","Happy Forester Bottle"],"Liquor Dealer (Happy Forester ต้องหาเอง)",1440,"Alcohol",null),
+S0("b2","basic","Car",["Spark Plugs","Car Headlight","DW-04"],"Car Parts Dealer (Spark Plugs ต้องหาเอง)",1356,"Car Parts",null),
+S0("b3","basic","Equipment",["Field Ration","Laser Rangefinder","Binoculars"],"Armor Dealer",2116,"Carabiner Set",12120),
+S0("b4","basic","Weapons",["Gun Cleaning Kit","Gun Grease","Basic Gunpowder Kit"],"Arms Dealer",1570,"Weapon Parts",8025),
+S0("b5","basic","Jewelry",["SUGI Earrings","PEGIUET Watch","CHIPARDI Necklace"],"Jewelry Dealer",2548,"Costume Jewelry",7860),
+S0("b6","basic","Medical",["Vial With Supplements","Vial With Vaccine","Ophthalmoscope"],"Medical Supplies Dealer (Ophthalmoscope ต้องหาเอง)",1126,"Medications",null),
+S0("b7","basic","Electronics",["AIR-P Laptop","G-FLOW Smartphone","AIRHEADS Headphones"],"Electronics Dealer",1266,"Electronics",5745),
+S0("a1","additional","Alcohol",["Fine Wine","Diamond Breeze","Omega Bottle"],"Liquor Dealer (Diamond Breeze: ร้านสะดวกซื้อ/คาเฟ่)",1458,"Alcohol",null),
+S0("a2","additional","Car",["Cheap Car Stereo","Affordable Dashcam","Hanging Dice"],"Stereo: ปั๊มน้ำมัน Downtown ที่เหลือหาเอง",1380,"Car Parts",null),
+S0("a3","additional","Camping",["Camping Stove","Snap-Snap Lighter","Steel Carabiner"],"Armor Dealer",1494,"Carabiner Set",7455),
+S0("a4","additional","Weapons",["Gyroscope","Modern Compass","Imperial Collectible Knife"],"Knife จาก Arms Dealer ที่เหลือหาเอง",1840,"Weapon Parts",null),
+S0("a5","additional","Jewelry",["MAFFI Earrings","ALON GIA Ring","ALON GIA Necklace"],"Jewelry Dealer",2578,"Costume Jewelry",8085),
+S0("a6","additional","Medical",["Thermometer","Vial With Illegal Drug","Burex Condoms"],"Medical Supplies Dealer (Vial หาเอง)",1230,"Medications",null),
+S0("a7","additional","Electronics",["Key-Ten-Do Console","MS MIC Headphones","D-MAX Smartphone"],"Electronics Dealer",1506,"Electronics",7545),
+...[["special",[["CollectiToy #3 Figure","Old Huba Cigars","Mystic Card Chronicles Deck"],["Eclipse Bottle","PENARAI Watch","REFIER Necklace"],["Cyber Collectible Knife","Standard Gunpowder Kit","Reinforced Carabiner"],["Steering Wheel","Dashcam","HUBRID Laptop"],["Deity Statue","Vial With Liquid","Glucometer"],["ZTX Console","DS MAX Headphones","MAFFI Ring"],["DIGITAL SOUL Comic Book","LACROCAS Perfume","Zipit Condoms"],["Deity Statue","Car Perfume","Racer Keychain"],["4 Old Pocket Bottles","Premium Multitool","2 RedOlive Lighters"],["Professional Gun Cleaning Kit","Professional Gun Grease","Ballistic Chronograph"]]],["unique",[["Nightfall Collectible Knife","SkyDragon Lighter","DUCHEE Perfume"],["PD STATION Laptop","Pit Bull Bobblehead","PRIDE Ring"],["High-precision Stove","Joker's Choice Deck","Refined Gunpowder Kit"],["Premium Car Compressor","Tuver Phone","Modern Tactical Binoculars"],["Krystal Authority Bottle","POLEX Watch","Playgirl Condoms"],["Beat Head Headphones","Tactical Carabiner","Drone Controller"],["MASK Comic Book","PENARAI Necklace","Royal Motors Emblem"],["OPALINE Magazine","AMINA Earrings","Cosmetic Ampule"],["Dental Loupes","Synthetic Gun Grease","Collectible Multitool"],["CollectiToy x TA","Premium Dashcam","Eason McKinley Card"]]]].flatMap(([l,a])=>a.map((it,i)=>S0(l[0]+(i+1),l,(l==="special"?"Special":"Unique")+" #"+(i+1),it,"ของหายาก หาจากการปล้นเป้าหมายใหญ่",0,"",null)))
+];
+let S={have:{},cm:{},tb:{},sp:0,un:0,not:1,rf:0,l:"all"};
+try{const r=localStorage.getItem("robrun_v1");if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem("robrun_v1",JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s),fmt=n=>"$"+Math.round(n).toLocaleString("en-US");
+const got=s=>(S.have[s.id]||[0,0,0]);
+const cnt=s=>S.cm[s.id]||0;
+const nGot=s=>got(s).filter(Boolean).length;
+const isDone=s=>nGot(s)===3&&(!s.c||cnt(s)>=10);
+const mult=()=>1+BON[S.not];
+
+function view(){
+ const q=$("#q").value.trim().toLowerCase(),sh=$("#show").value,so=$("#sort").value;
+ let a=SETS.filter(s=>(S.l==="all"||S.l===s.l)&&(!q||(s.t+" "+s.it.join(" ")+" "+s.c).toLowerCase().includes(q)));
+ if(sh==="table")a=a.filter(s=>S.tb[s.l]===s.id);
+ if(sh==="todo")a=a.filter(s=>!isDone(s));
+ if(sh==="done")a=a.filter(isDone);
+ if(so==="near"){const rem=s=>3-nGot(s)+(s.c?(10-cnt(s))/10:0);a.sort((x,y)=>rem(x)-rem(y))}
+ if(so==="cheap")a.sort((x,y)=>(x.d??1e9)-(y.d??1e9));
+ if(so==="fence")a.sort((x,y)=>(y.f||0)-(x.f||0));
+ $("#grid").innerHTML=a.map(s=>{
+  const g=got(s),d=isDone(s),on=S.tb[s.l]===s.id;
+  return `<article class="card ${d?"done":""} ${on?"ontable":""}"><header><h3><span class="ico">${IC[s.t]}</span> ${s.t}</h3><span class="badge ${s.l}">${LN[s.l]}</span></header>`+
+  s.it.map((n,i)=>`<label class="it ${g[i]?"got":""}"><input type="checkbox" data-a="it" data-id="${s.id}" data-i="${i}" ${g[i]?"checked":""}><span>${n}</span></label>`).join("")+
+  `<div class="cm">${s.c}: <button data-a="cm" data-id="${s.id}" data-d="-1">−</button><b>${cnt(s)}</b>/10<button data-a="cm" data-id="${s.id}" data-d="1">+</button></div>`+
+  `<div class="meta">ที่มา: ${s.w}<br>${s.f?"ขาย Fence: <b>"+fmt(s.f)+"</b> · ":""}Crate: <b>${fmt(VAL[s.l]*mult())}</b><br>${s.c?"ซื้อจากดีลเลอร์ (3 ชิ้น): <b>"+(s.d?fmt(s.d):"ซื้อครบไม่ได้")+"</b>":""}${s.d?"<br>กำไรประมาณ: <b>"+fmt(VAL[s.l]*mult()-s.d)+"</b>":""}</div>`+
+  `<div class="row"><button class="tb ${on?"on":""}" data-a="tb" data-id="${s.id}">${on?"✓ อยู่บนโต๊ะตอนนี้":"ตั้งเป็นชุดบนโต๊ะ"}</button><span class="chip ${d?"ok":""}">${d?"พร้อม Pack":"ไอเทม "+nGot(s)+"/3"+(s.c?" · "+cnt(s)+"/10":"")}</span></div></article>`;
+ }).join("")||'<p class="meta">ไม่พบชุดที่ตรงกับตัวกรอง</p>';
+ $("#rare").style.display=(S.l==="all"||S.l==="special"||S.l==="unique")?"":"none";
+ stats();
+}
+function stats(){slots();imgs();
+ const d=SETS.filter(isDone),items=SETS.reduce((n,s)=>n+nGot(s),0);
+ const money=d.reduce((n,s)=>n+VAL[s.l]*mult(),0);
+ $("#sDone").textContent=d.length+"/34";$("#sItems").textContent=items+"/102";$("#sMoney").textContent=fmt(money);
+ $("#pbar").style.width=(items+SETS.reduce((n,s)=>n+(s.c?Math.min(cnt(s),10)/10:0),0))/(102+14)*100+"%";
+ $("#spN").textContent=S.sp;$("#unN").textContent=S.un;$("#not").value=S.not;
+ document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.l===S.l));
+}
+document.addEventListener("click",e=>{
+ const t=e.target.closest("[data-a]");if(!t)return;
+ const s=SETS.find(x=>x.id===t.dataset.id),a=t.dataset.a;
+ if(a==="it"){const g=got(s).slice();g[+t.dataset.i]=t.checked;S.have[s.id]=g}
+ if(a==="cm")S.cm[s.id]=Math.max(0,Math.min(10,cnt(s)+ +t.dataset.d));
+ if(a==="clr")S.tb[s.l]=null;
+ if(a==="all")S.cm[s.id]=t.checked?10:0;
+ if(a==="tb"){S.tb[s.l]=S.tb[s.l]===s.id?null:s.id;if(S.tb[s.l])setTimeout(()=>$("#slots").scrollIntoView({behavior:"smooth",block:"start"}),50)}
+ save();view();
+});
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(b){S.l=b.dataset.l;save();view()}});
+$("#rare").addEventListener("click",e=>{const b=e.target.closest("[data-s]");if(!b)return;const k=b.dataset.s==="special"?"sp":"un";S[k]=Math.max(0,Math.min(10,S[k]+ +b.dataset.d));save();view()});
+$("#not").addEventListener("change",e=>{S.not=+e.target.value;save();view()});
+["#q","#show","#sort"].forEach(i=>$(i).addEventListener("input",view));
+$("#rf").addEventListener("click",()=>{S.rf=Date.now()+600000;save();tick()});
+function tick(){const l=S.rf-Date.now(),el=$("#rft");if(l<=0){el.textContent="พร้อมใช้งาน";return}const m=Math.floor(l/60000),s=Math.floor(l%60000/1000);el.textContent="รออีก "+m+":"+String(s).padStart(2,"0")}
+const IC0={Alcohol:"🍾",Car:"🚗",Equipment:"🧭",Camping:"⛺",Weapons:"🔫",Jewelry:"💎",Medical:"💊",Electronics:"💻"};const IC=new Proxy(IC0,{get:(o,k)=>o[k]||"🎁"});
+const esc=t=>t.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+S.cs=S.cs||{};
+function slots(){
+ $("#slots").innerHTML=["basic","additional","special","unique"].map(l=>{
+  const s=SETS.find(x=>x.id===S.tb[l]);
+  if(0)return `<div class="slot"><div class="sh"><span class="badge ${l}">${LN[l]}</span></div><div class="big">🎁</div><input class="cs" data-k="${l}" placeholder="พิมพ์ชื่อชุดบนโต๊ะ" value="${esc(S.cs[l]||"")}"><div class="meta">Crate: <b>${fmt(VAL[l]*mult())}</b></div></div>`;
+  if(!s)return `<div class="slot empty"><div class="sh"><span class="badge">${LN[l]}</span></div><div class="big">＋</div><div class="meta">ยังว่าง กด "ตั้งเป็นชุดบนโต๊ะ" ที่การ์ดด้านล่าง</div></div>`;
+  const g=got(s),d=isDone(s),p=s.c?(nGot(s)/3*.5+Math.min(cnt(s),10)/10*.5)*100:nGot(s)/3*100;
+  return `<div class="slot ${d?"full":""}"><div class="sh"><span class="badge ${l}">${LN[l]}</span><button data-a="clr" data-id="${s.id}">✕ เอาออก</button></div><div class="big">${IC[s.t]}</div><h3>${s.t}</h3>`+
+  s.it.map((n,i)=>`<label class="it ${g[i]?"got":""}"><input type="checkbox" data-a="it" data-id="${s.id}" data-i="${i}" ${g[i]?"checked":""}><span>${n}</span></label>`).join("")+
+  `<div class="cm">${s.c}: <button data-a="cm" data-id="${s.id}" data-d="-1">−</button><b>${cnt(s)}</b>/10<button data-a="cm" data-id="${s.id}" data-d="1">+</button></div><div class="bar"><i style="width:${p}%"></i></div><span class="chip ${d?"ok":""}">${d?"✅ พร้อม Pack · "+fmt(VAL[l]*mult()):"ไอเทม "+nGot(s)+"/3"+(s.c?" · "+cnt(s)+"/10":"")}</span></div>`;
+ }).join("");
+ plan();
+}
+function plan(){
+ const a=["basic","additional","special","unique"].map(l=>SETS.find(x=>x.id===S.tb[l])).filter(Boolean);
+ if(!a.length){$("#plan").innerHTML='<b>📋 แผนของวันนี้</b><div class="meta">เลือกชุดบนโต๊ะเพื่อดูรายการที่ต้องซื้อและขโมย</div>';return}
+ let buy=0,crate=0;
+ const rows=a.map(s=>{const miss=s.it.filter((_,i)=>!got(s)[i]),c=Math.max(0,10-cnt(s));if(s.d)buy+=s.d*miss.length/3;crate+=VAL[s.l]*mult();
+  return `<li><b>${IC[s.t]} ${s.t} (${LN[s.l]})</b>: ${miss.length?"ขาด "+miss.join(", "):"ไอเทมครบ"}${s.c?" · "+(c?"ขโมย "+s.c+" อีก "+c+" ชิ้น":"ของธรรมดาครบ"):""}</li>`}).join("");
+ $("#plan").innerHTML=`<b>📋 แผนสำหรับชุดบนโต๊ะ</b><ul>${rows}</ul><div class="meta">Crate รวม <b>${fmt(crate)}</b> · ค่าซื้อดีลเลอร์ที่เหลือ (ประมาณ) <b>${fmt(buy)}</b> · กำไรสุทธิ ~<b>${fmt(crate-buy)}</b></div>`;
+}
+$("#slots").addEventListener("input",e=>{const k=e.target.dataset.k;if(k){S.cs[k]=e.target.value;save()}});
+function applyTh(){document.documentElement.dataset.theme=S.th||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}
+$("#th").addEventListener("click",()=>{S.th=document.documentElement.dataset.theme==="dark"?"light":"dark";save();applyTh()});
+$("#ex").addEventListener("click",()=>{const t=$("#io");t.hidden=false;t.value=JSON.stringify(Object.assign({},S,{_im:IM}));t.select();try{navigator.clipboard.writeText(t.value)}catch(e){}});
+$("#im").addEventListener("click",()=>{const t=$("#io");if(t.hidden||!t.value.trim()){t.hidden=false;t.value="";t.placeholder="วางข้อมูลที่ Export ไว้ แล้วกด Import อีกครั้ง";return}try{const D=JSON.parse(t.value);if(D._im){IM=D._im;delete D._im;saveIm()}S=Object.assign(S,D);S.cs=S.cs||{};save();t.hidden=true;applyTh();view()}catch(e){t.value="ข้อมูลไม่ถูกต้อง"}});
+let rsc=0;$("#rs").addEventListener("click",e=>{const b=e.target;if(!rsc){rsc=1;b.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{rsc=0;b.textContent="♻️ Reset"},3000);return}S={have:{},cm:{},tb:{},cs:{},sp:0,un:0,not:1,rf:0,l:"all",th:S.th};save();rsc=0;b.textContent="♻️ Reset";view()});
+applyTh();
+let IM={};try{IM=JSON.parse(localStorage.getItem("robrun_img_v1")||"{}")}catch(e){}
+function msg(t){let m=$("#msg");if(!m){m=document.createElement("div");m.id="msg";m.style.cssText="position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ac);color:#fff;padding:8px 14px;border-radius:10px;z-index:9";document.body.appendChild(m)}m.textContent=t;m.hidden=false;clearTimeout(m.t);m.t=setTimeout(()=>m.hidden=true,3000)}
+function saveIm(){try{localStorage.setItem("robrun_img_v1",JSON.stringify(IM));return true}catch(e){msg("เก็บรูปไม่ได้ พื้นที่เบราว์เซอร์เต็ม");return false}}
+function thumb(k){return `<button class="th" data-up="${k}" title="อัปโหลดรูป">${IM[k]?`<img src="${IM[k]}" alt="">`:"📷"}</button>`+(IM[k]?`<button class="rmi" data-rm="${k}" title="ลบรูป">✕</button>`:"")}
+function imgs(){
+ document.querySelectorAll("label.it input[data-a=it]").forEach(i=>i.insertAdjacentHTML("afterend",thumb(i.dataset.id+":"+i.dataset.i)));
+ document.querySelectorAll(".cm").forEach(c=>{const b=c.querySelector("[data-a=cm]"),s=b&&SETS.find(x=>x.id===b.dataset.id);if(!s)return;if(!s.c){c.remove();return}c.insertAdjacentHTML("afterbegin",thumb(s.id+":c"));c.insertAdjacentHTML("beforeend",`<label class="all"><input type="checkbox" data-a="all" data-id="${s.id}" ${cnt(s)>=10?"checked":""}> ครบ 10</label>`)});
+}
+function shrink(f){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,160/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);ok(c.toDataURL("image/webp",.85))};im.onerror=no;im.src=r.result};r.onerror=no;r.readAsDataURL(f)})}
+const fi=document.createElement("input");fi.type="file";fi.accept="image/*";fi.hidden=true;document.body.appendChild(fi);let fk="";
+fi.addEventListener("change",async()=>{const f=fi.files[0];fi.value="";if(!f||!fk)return;const k=fk;try{IM[k]=await shrink(f);if(saveIm())view();else delete IM[k]}catch(e){msg("อ่านรูปไม่ได้")}});
+document.addEventListener("click",e=>{const u=e.target.closest("[data-up]"),r=e.target.closest("[data-rm]");if(u){fk=u.dataset.up;fi.click()}if(r){delete IM[r.dataset.rm];saveIm();view()}});
+setInterval(tick,1000);tick();view();
+</script>
+</body>
+</html>

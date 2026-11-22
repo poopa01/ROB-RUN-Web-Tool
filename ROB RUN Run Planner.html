@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROB RUN Run Planner</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--tx:#14171c;--mu:#5b6470;--bd:#d8dce2;--ac:#d93b30;--ok:#1b9a52;--chip:#eef0f3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Sarabun",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:24px;margin:4px 0}h3{font-size:16px;margin:0 0 6px}
+a{color:var(--ac)}.sub{color:var(--mu);margin:0 0 14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:21px}.stat span{color:var(--mu);font-size:13px}
+.stat.big{border-color:var(--ac)}.stat.big b{color:var(--ac)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;align-items:center}
+input,select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 10px}
+button{cursor:pointer}button:hover{border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.f{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mu)}
+.f input,.f select{width:100%}
+.orow{display:flex;gap:6px;margin-bottom:6px}.orow input{min-width:0;flex:1}.orow input[type=number]{flex:.7}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}td{padding:5px 4px;border-bottom:1px solid var(--bd)}td:nth-child(2){text-align:right}td:nth-child(3){text-align:right;white-space:nowrap}
+.lost{color:var(--ac)}.kept{color:var(--ok)}
+.bar{height:8px;background:var(--chip);border-radius:6px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--ac)}
+.note{font-size:12.5px;color:var(--mu);margin-top:18px}.msg{margin:8px 0 0}.hs{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px;color:var(--mu);font-size:13px}.hs b{color:var(--ac)}small{color:var(--mu)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--bd)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.pg{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:14px}
+.pgt{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mu);font-weight:600;font-size:14px;white-space:nowrap}
+.pgt:hover{color:var(--tx)}.pgt.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.money{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;background:var(--card);border:2px solid var(--ok);border-radius:14px;padding:6px 16px}
+.money:hover{border-color:var(--ok)}.money small{font-size:12px}.money b{font-size:24px;color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><nav class="pg"><a class="pgt" href="https://claude.ai/artifact/3c2LYMCQrqBh2nGkEkKWp8" target="_blank" rel="noopener">📋 Collection Tracker</a><a class="pgt on" aria-current="page">💰 Run Planner</a></nav><button id="hm" class="money"><small>🏠 เงินที่บ้าน</small><b id="hmv">$0</b></button></header>
+<h1>💰 ROB RUN Run Planner</h1>
+<p class="sub">ใส่ของที่เอาไปรอบนี้ แล้วดูว่าถ้าตายหรือโดนจับจะเสียเท่าไหร่ เทียบกับเงินที่บ้าน (บันทึกในเบราว์เซอร์อัตโนมัติ)</p>
+
+<div class="stats" id="stats"></div>
+
+<div class="tools">
+<select id="scen" title="เหตุการณ์">
+<option value="crim">ตายตอนเป็น Criminal</option>
+<option value="arrest">ถูกจับ / ยอมแพ้ตำรวจ</option>
+<option value="bribe">ถูกจับ แล้วจ่ายสินบนตำรวจ</option>
+<option value="safe">ตายในเซฟโซน / เป็น Civilian / ตำรวจ</option>
+<option value="settle">ตายในนิคม (Settlement)</option>
+</select>
+<select id="not" title="Notoriety"><option value="1">Notoriety Lv 1 (+0%)</option><option value="2">Lv 2 (+5%)</option><option value="3">Lv 3 (+10%)</option><option value="4">Lv 4 (+15%)</option><option value="5">Lv 5 (+25%)</option></select>
+<button data-p="เริ่มต้น">⚡ ชุดเริ่มต้น</button><button data-p="กลาง">⚡ ชุดกลาง</button><button data-p="สูง">⚡ ชุดสูง</button>
+<button id="rs">♻️ ล้างทั้งหมด</button>
+</div>
+
+<div class="grid" id="form"></div>
+<div class="panel" id="res"></div>
+<div class="panel"><h3>☠️ ประวัติการตาย</h3>
+<div class="tools" style="margin:0 0 8px"><input id="hn" placeholder="หมายเหตุ เช่น ตายที่ไหน ใครฆ่า" style="flex:1;min-width:160px"><button id="hl">☠️ บันทึกว่าตายรอบนี้ (ตามชุดและเหตุการณ์ด้านบน)</button></div>
+<div id="hist"></div></div>
+
+<p class="note">ราคาเป็นราคาฐานที่ Black Market (ค่าซื้อชุดใหม่) จากข้อมูลชุมชน ณ พ.ย. 2026 อาจเปลี่ยนตามแพตช์ ราคาตอนซื้อกับดีลเลอร์ในเมืองสูงกว่านี้ (ประมาณ 3 เท่า) ส่วนราคาขายคืนที่ Fence ต่ำกว่า (ประมาณ 40%) กฎการเสียของตอนตายมาจากคู่มือ MetaForge ว่าอุปกรณ์ (อาวุธ เกราะ) และของในกระเป๋าเสียหรือไม่เสียตามสถานการณ์ การจัดว่ายา ระเบิด กระสุน และ Crate อยู่ในหมวด "ของในกระเป๋า" เป็นการสันนิษฐานของหน้านี้ เงินที่บ้านไม่ถูกนับว่าเสียตอนตาย แต่ยังเสี่ยงโดนบุกบ้านและถูกล้างตอน Federal Raid (wipe) เว็บแฟนเมด ไม่เกี่ยวข้องกับ Kefir</p>
+</div>
+
+<script>
+const L={
+G:[["DP-9",300],["MC-10",3500],["Harris 500",3500],["KL-545",6000],["LBR-44",20000],["STAR-H",27500],["ORDR-12",28000],["JP-7",29000],["PDW90",30800],["RC 5.56",32000],["Vulture 50",50000],["DRM-14",103500],["TAG-12K",110000],["AP Scalar",115000],["SR Reaper",120000],["LM 249",209600]],
+A:[["Light Body Armor",4000],["Medium Body Armor",15000],["Assault Body Armor",70000],["Heavy Body Armor",140000],["Bastion Body Armor",350000]],
+B:[["Sports Bag L1",5000],["Sports Bag L2",15000],["Sports Bag L3",40000]],
+P:[["Versatile Pouch #1",250],["Versatile Pouch #2",1200],["Versatile Pouch #3",2700],["Versatile Pouch #4",12000]],
+M:[["AFAK",500],["Painkillers",500],["Injector (L2)",2000],["Injector (L3)",6000]],
+R:[["Flash Grenade",4000],["Frag Grenade",14960],["Smoke Grenade",5040]],
+C:[["Collection Crate",50000],["Rare Collection Crate",150000],["Unique Collection Crate",500000]]};
+const BON=[0,0,.05,.10,.15,.25],PRE={
+"เริ่มต้น":{g1:"DP-9",ar:"Light Body Armor",bg:"Sports Bag L1",m0:2},
+"กลาง":{g1:"KL-545",g2:"DP-9",ar:"Medium Body Armor",pl:2,bg:"Sports Bag L2",m0:2,m1:2},
+"สูง":{g1:"RC 5.56",g2:"Vulture 50",ar:"Assault Body Armor",pl:3,bg:"Sports Bag L2",m0:2,m2:2,r0:2}};
+const $=s=>document.querySelector(s),fmt=x=>"$"+Math.round(x).toLocaleString("en-US");
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let S={v:{},o:[],scen:"crim",not:1,h:[]};
+try{const r=localStorage.getItem("robrun_run_v1");if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem("robrun_run_v1",JSON.stringify(S))}catch(e){}};
+const sel=(k,l,a)=>`<label class="f">${l}<select data-k="${k}"><option value="">— ไม่มี —</option>${a.map(x=>`<option value="${x[0]}">${x[0]} · ${fmt(x[1])}</option>`).join("")}</select></label>`;
+const num=(k,l)=>`<label class="f">${l}<input type="number" min="0" inputmode="numeric" data-k="${k}" placeholder="0"></label>`;
+const qty=(p,a)=>a.map((x,i)=>num(p+i,`${x[0]} · ${fmt(x[1])} × จำนวน`));
+const SEC=[
+["🔫 อาวุธ (หลัก + รอง)",[sel("g1","อาวุธหลัก",L.G),num("g1p","ราคาเอง (ถ้าไม่มีในลิสต์)"),sel("g2","อาวุธรอง",L.G),num("g2p","ราคาเอง (ถ้าไม่มีในลิสต์)")]],
+["🛡️ เกราะและกระเป๋า",[sel("ar","เกราะ",L.A),num("pl","Steel Plate × จำนวน (ชิ้นละ $1,000)"),sel("bg","Sports Bag",L.B),sel("pc","Versatile Pouch",L.P)]],
+["💊 ยา ระเบิด กระสุน",[...qty("m",L.M),...qty("r",L.R),num("am","มูลค่ากระสุนรวม ($)")]],
+["📦 Collection Crate ที่ถืออยู่",qty("c",L.C)],
+["🏠 เงินที่บ้าน",[num("hd","เงินสกปรก (Dirty cash)"),num("hc","เงินสะอาด / เงินอื่นที่เก็บไว้")]],
+["🎒 ของอื่นที่ถือไป (ลูท)",['<div id="oth"></div><button id="addo">+ เพิ่มของ</button>']]];
+$("#form").innerHTML=SEC.map(([t,r])=>`<section class="card"><h3>${t}</h3>${r.join("")}</section>`).join("");
+
+function oth(){$("#oth").innerHTML=S.o.map((x,i)=>`<div class="orow"><input data-o="${i}" data-f="n" placeholder="ชื่อของ" value="${esc(x.n)}"><input type="number" min="0" data-o="${i}" data-f="v" placeholder="มูลค่า" value="${x.v||""}"><button data-rm="${i}">✕</button></div>`).join("")}
+function sync(){document.querySelectorAll("[data-k]").forEach(e=>e.value=S.v[e.dataset.k]??"");$("#scen").value=S.scen;$("#not").value=S.not;oth()}
+
+function calc(){
+ const v=k=>+S.v[k]||0,pr=(a,k)=>(a.find(x=>x[0]===S.v[k])||[0,0])[1],m=1+BON[S.not],q=(p,a)=>a.reduce((s,x,i)=>s+x[1]*v(p+i),0);
+ const gear=[["อาวุธหลัก",v("g1p")||pr(L.G,"g1")],["อาวุธรอง",v("g2p")||pr(L.G,"g2")],["เกราะ",pr(L.A,"ar")],["Steel Plate",v("pl")*1000],["Sports Bag",pr(L.B,"bg")],["Versatile Pouch",pr(L.P,"pc")]];
+ const bag=[["ยา",q("m",L.M)],["ระเบิด",q("r",L.R)],["กระสุน",v("am")],["Collection Crate (รวมโบนัส Notoriety)",q("c",L.C)*m],["ของอื่น (ลูท)",S.o.reduce((s,x)=>s+(+x.v||0),0)]];
+ const sum=a=>a.reduce((s,x)=>s+x[1],0),G=sum(gear),B=sum(bag),home=v("hd")+v("hc");
+ const lg=S.scen==="crim"||S.scen==="settle",lb=lg||S.scen==="arrest",loss=(lg?G:0)+(lb?B:0),wealth=home+G+B,pct=wealth?loss/wealth*100:0;
+ LAST={loss,G,B};$("#hmv").textContent=fmt(home);$("#hm").title="Dirty "+fmt(v("hd"))+" · สะอาด "+fmt(v("hc"))+" (กดเพื่อแก้)";$("#stats").innerHTML=`<div class="stat big"><b>${fmt(loss)}</b><span>เสียถ้าเกิดเหตุนี้</span></div><div class="stat"><b>${fmt(G+B)}</b><span>มูลค่าที่เอาไปรอบนี้</span></div><div class="stat"><b>${fmt(home)}</b><span>เงินที่บ้าน</span></div><div class="stat"><b>${fmt(wealth)}</b><span>ทรัพย์สินรวม</span></div><div class="stat"><b>${pct.toFixed(1)}%</b><span>สัดส่วนที่เสี่ยง<div class="bar"><i style="width:${Math.min(100,pct)}%"></i></div></span></div>`;
+ const row=(a,l)=>a.filter(x=>x[1]>0).map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td><td class="${l?"lost":"kept"}">${l?"❌ เสีย":"✅ ไม่เสีย"}</td></tr>`).join("");
+ const crates=v("c0")+v("c1")+v("c2");
+ let msg="";
+ if(lg&&G>0)msg+=`<p class="msg">${home>=G?`เงินที่บ้านพอซื้ออุปกรณ์ชุดเดิมใหม่ได้ประมาณ <b>${Math.floor(home/G)}</b> ครั้ง`:`เงินที่บ้านไม่พอซื้ออุปกรณ์ชุดเดิมใหม่ ขาดอีก <b>${fmt(G-home)}</b>`}</p>`;
+ if(crates)msg+=`<p class="msg">⚠️ ถือ Crate อยู่: ชักอาวุธแล้ว Crate จะหล่น และตำรวจที่ยึดได้จะได้รางวัล</p>`;
+ $("#res").innerHTML=`<h3>รายละเอียด</h3>${G+B?`<table>${row(gear,lg)}${row(bag,lb)}</table>`:'<p class="msg">ยังไม่ได้ใส่ของ เลือกจากการ์ดด้านบนหรือกดชุดสำเร็จรูป</p>'}${msg}`;
+}
+document.addEventListener("input",e=>{const t=e.target,d=t.dataset;
+ if(d.k)S.v[d.k]=t.value;
+ else if(d.o)S.o[+d.o][d.f]=d.f==="v"?+t.value||0:t.value;
+ else if(t.id==="scen")S.scen=t.value;else if(t.id==="not")S.not=+t.value;else return;
+ save();calc()});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+ if(b.id==="hl"){const cr=[0,1,2].reduce((s,i)=>s+(+S.v["c"+i]||0),0),it=[S.v.g1,S.v.g2,S.v.ar].filter(Boolean);if(cr)it.push("Crate ×"+cr);S.h.push({t:Date.now(),sc:$("#scen").selectedOptions[0].text,loss:LAST.loss,g:LAST.G,b:LAST.B,n:$("#hn").value.trim(),it:it.join(", ")});$("#hn").value="";hist()}
+ else if(b.dataset.hx){S.h.splice(+b.dataset.hx,1);hist()}
+ else if(b.id==="hm"){const i=document.querySelector('[data-k="hd"]');i.scrollIntoView({behavior:"smooth",block:"center"});i.focus();return}
+ else if(b.id==="addo"){S.o.push({n:"",v:0});oth()}
+ else if(b.dataset.rm){S.o.splice(+b.dataset.rm,1);oth()}
+ else if(b.dataset.p){const o=Object.assign({},PRE[b.dataset.p]);["hd","hc","am"].forEach(k=>{if(S.v[k])o[k]=S.v[k]});S.v=o;sync()}
+ else if(b.id==="rs"){if(b.dataset.c){S={v:{},o:[],scen:"crim",not:1,h:S.h};b.dataset.c="";b.textContent="♻️ ล้างทั้งหมด";sync()}else{b.dataset.c=1;b.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{b.dataset.c="";b.textContent="♻️ ล้างทั้งหมด"},3000);return}}
+ else return;
+ save();calc()});
+let LAST={loss:0,G:0,B:0};
+function hist(){const h=S.h||[],tot=h.reduce((s,x)=>s+x.loss,0),mx=h.reduce((s,x)=>Math.max(s,x.loss),0);
+ $("#hist").innerHTML=h.length?`<div class="hs"><span>ตายแล้ว <b>${h.length}</b> ครั้ง</span><span>เสียรวม <b>${fmt(tot)}</b></span><span>เฉลี่ย <b>${fmt(tot/h.length)}</b></span><span>แพงสุด <b>${fmt(mx)}</b></span></div><table>${h.slice().reverse().map((x,i)=>`<tr><td>${new Date(x.t).toLocaleString("th-TH",{dateStyle:"short",timeStyle:"short"})}<br><small>${esc(x.sc)}${x.n?" · "+esc(x.n):""}${x.it?"<br>"+esc(x.it):""}</small></td><td>${fmt(x.loss)}</td><td><button data-hx="${h.length-1-i}">✕</button></td></tr>`).join("")}</table>`:'<p class="msg">ยังไม่มีประวัติ กด "บันทึกว่าตายรอบนี้" หลังเสียของ'}
+hist();sync();calc();
+</script>
+</body>
+</html>
