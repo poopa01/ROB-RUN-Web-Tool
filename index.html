@@ -239,7 +239,7 @@ applyTh();
 let IM={};try{IM=JSON.parse(localStorage.getItem("robrun_img_v1")||"{}")}catch(e){}
 function msg(t){let m=$("#msg");if(!m){m=document.createElement("div");m.id="msg";m.style.cssText="position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ac);color:#fff;padding:8px 14px;border-radius:10px;z-index:9";document.body.appendChild(m)}m.textContent=t;m.hidden=false;clearTimeout(m.t);m.t=setTimeout(()=>m.hidden=true,3000)}
 function saveIm(){try{localStorage.setItem("robrun_img_v1",JSON.stringify(IM));return true}catch(e){msg("เก็บรูปไม่ได้ พื้นที่เบราว์เซอร์เต็ม");return false}}
-function thumb(k){return `<button class="th" data-up="${k}" title="อัปโหลดรูป">${IM[k]?`<img src="${IM[k]}" alt="">`:"📷"}</button>`+(IM[k]?`<button class="rmi" data-rm="${k}" title="ลบรูป">✕</button>`:"")}
+function thumb(k){return `<button class="th" data-up="${k}" title="อัปโหลดรูป">${IM[k]?`<img src="${IM[k]}" alt="">`:"📷"}</button><button class="rmi" data-pa="${k}" title="วางรูปจากคลิปบอร์ด (กดแล้วกด Ctrl+V)">📋</button>`+(IM[k]?`<button class="rmi" data-rm="${k}" title="ลบรูป">✕</button>`:"")}
 function imgs(){
  document.querySelectorAll("label.it input[data-a=it]").forEach(i=>i.insertAdjacentHTML("afterend",thumb(i.dataset.id+":"+i.dataset.i)));
  document.querySelectorAll(".cm").forEach(c=>{const b=c.querySelector("[data-a=cm]"),s=b&&SETS.find(x=>x.id===b.dataset.id);if(!s)return;if(!s.c){c.remove();return}c.insertAdjacentHTML("afterbegin",thumb(s.id+":c"));c.insertAdjacentHTML("beforeend",`<label class="all"><input type="checkbox" data-a="all" data-id="${s.id}" ${cnt(s)>=10?"checked":""}> ครบ 10</label>`)});
@@ -248,6 +248,13 @@ function shrink(f){return new Promise((ok,no)=>{const r=new FileReader();r.onloa
 const fi=document.createElement("input");fi.type="file";fi.accept="image/*";fi.hidden=true;document.body.appendChild(fi);let fk="";
 fi.addEventListener("change",async()=>{const f=fi.files[0];fi.value="";if(!f||!fk)return;const k=fk;try{IM[k]=await shrink(f);if(saveIm())view();else delete IM[k]}catch(e){msg("อ่านรูปไม่ได้")}});
 document.addEventListener("click",e=>{const u=e.target.closest("[data-up]"),r=e.target.closest("[data-rm]");if(u){fk=u.dataset.up;fi.click()}if(r){delete IM[r.dataset.rm];saveIm();view()}});
+let pk="";
+async function put(k,f){try{IM[k]=await shrink(f);if(saveIm())view();else delete IM[k]}catch(e){msg("อ่านรูปไม่ได้")}}
+function arm(k){pk=k;document.querySelectorAll("[data-pa]").forEach(b=>b.style.outline=b.dataset.pa===k?"2px solid var(--ac)":"")}
+document.addEventListener("click",async e=>{const p=e.target.closest("[data-pa]");if(!p)return;const k=p.dataset.pa;try{const its=await navigator.clipboard.read();for(const it of its){const t=it.types.find(x=>x.startsWith("image/"));if(t){pk="";await put(k,await it.getType(t));return}}}catch(e){}arm(k);msg("เลือกช่องแล้ว กด Ctrl+V (หรือ ⌘V) เพื่อวางรูป")});
+document.addEventListener("paste",e=>{const f=[...(e.clipboardData&&e.clipboardData.files||[])].find(x=>x.type.startsWith("image/"));if(!f||!pk)return;e.preventDefault();const k=pk;pk="";put(k,f)});
+document.addEventListener("dragover",e=>{if(e.target.closest("[data-up]"))e.preventDefault()});
+document.addEventListener("drop",e=>{const u=e.target.closest("[data-up]");if(!u)return;e.preventDefault();const f=[...e.dataTransfer.files].find(x=>x.type.startsWith("image/"));if(f)put(u.dataset.up,f)});
 setInterval(tick,1000);tick();view();
 </script>
 </body>
