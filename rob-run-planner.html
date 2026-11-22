@@ -138,5 +138,6 @@ function hist(){const h=S.h||[],tot=h.reduce((s,x)=>s+x.loss,0),mx=h.reduce((s,x
  $("#hist").innerHTML=h.length?`<div class="hs"><span>ตายแล้ว <b>${h.length}</b> ครั้ง</span><span>เสียรวม <b>${fmt(tot)}</b></span><span>เฉลี่ย <b>${fmt(tot/h.length)}</b></span><span>แพงสุด <b>${fmt(mx)}</b></span></div><table>${h.slice().reverse().map((x,i)=>`<tr><td>${new Date(x.t).toLocaleString("th-TH",{dateStyle:"short",timeStyle:"short"})}<br><small>${esc(x.sc)}${x.n?" · "+esc(x.n):""}${x.it?"<br>"+esc(x.it):""}</small></td><td>${fmt(x.loss)}</td><td><button data-hx="${h.length-1-i}">✕</button></td></tr>`).join("")}</table>`:'<p class="msg">ยังไม่มีประวัติ กด "บันทึกว่าตายรอบนี้" หลังเสียของ'}
 hist();sync();calc();
 </script>
+ <script src="storage-manager.js"></script>
 </body>
 </html>
