@@ -257,5 +257,6 @@ document.addEventListener("dragover",e=>{if(e.target.closest("[data-up]"))e.prev
 document.addEventListener("drop",e=>{const u=e.target.closest("[data-up]");if(!u)return;e.preventDefault();const f=[...e.dataTransfer.files].find(x=>x.type.startsWith("image/"));if(f)put(u.dataset.up,f)});
 setInterval(tick,1000);tick();view();
 </script>
+ <script src="storage-manager.js"></script>
 </body>
 </html>
