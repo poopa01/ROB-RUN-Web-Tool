@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROB RUN Item Wiki</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--tx:#14171c;--mu:#5b6470;--bd:#d8dce2;--ac:#d93b30;--ok:#1b9a52;--chip:#eef0f3;--gold:#a8650c;--epic:#8b3fd1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;--gold:#f2b84b;--epic:#c28cff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;--gold:#f2b84b;--epic:#c28cff;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Sarabun",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:24px;margin:4px 0}h3{font-size:16px;margin:0}
+a{color:var(--ac)}.sub{color:var(--mu);margin:0 0 14px}small{color:var(--mu)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--bd)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.pg{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:14px;flex-wrap:wrap}
+.pgt{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mu);font-weight:600;font-size:14px;white-space:nowrap}
+.pgt:hover{color:var(--tx)}.pgt.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+input,select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:9px 11px}
+#q{flex:1;min-width:200px;font-size:16px}
+button{cursor:pointer}button:hover{border-color:var(--ac)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.chips button{padding:4px 11px;border-radius:20px;font-size:13px}
+.meta{font-size:13px;color:var(--mu);margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.card header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.badge{font-size:12px;padding:2px 9px;border-radius:20px;background:var(--chip);color:var(--mu);white-space:nowrap}
+.rEpic{color:var(--epic)}.rLegendary{color:var(--gold)}.rExotic{color:var(--ac)}
+.price{font-size:20px;font-weight:700;color:var(--ok)}.price small{display:block;font-size:12px;font-weight:400}
+dl{margin:0;font-size:14px}dt{color:var(--mu);font-size:12.5px;margin-top:6px}dd{margin:0}
+dd div{margin-bottom:4px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:12px}
+.note{font-size:12.5px;color:var(--mu);margin-top:18px}
+.pg{flex-wrap:wrap}.money{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;background:var(--card);border:2px solid var(--ok);border-radius:14px;padding:6px 16px;text-decoration:none;color:var(--tx)}.money small{font-size:12px;color:var(--mu)}.money b{font-size:24px;color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><nav class="pg"><a class="pgt" href="index.html">📋 Collection Tracker</a><a class="pgt" href="rob-run-planner.html">💰 Run Planner</a><a class="pgt" href="rob-run-goals.html">🎯 Goals</a><a class="pgt" href="rob-run-weed.html">🌿 Weed Calc</a><a class="pgt on" aria-current="page">📖 Item Wiki</a></nav><a class="money" href="rob-run-planner.html" title="กดเพื่อแก้เงินที่บ้านใน Run Planner"><small>🏠 เงินที่บ้าน</small><b id="hmv">$0</b></a></header>
+<h1>📖 ROB RUN Item Wiki</h1>
+<p class="sub">พิมพ์ชื่อไอเทมเป็นไทยหรืออังกฤษ เช่น "เหล้า", "ปืน", "Deity", "Special 5" เพื่อดูว่าหาได้จากไหน ราคาเท่าไหร่ และใช้ในชุด Collection ไหน</p>
+<div class="tools">
+<input id="q" type="search" placeholder="🔍 ค้นหาไอเทม หมวด หรือแหล่งที่หา" autocomplete="off">
+<select id="cat"></select>
+<select id="sort"><option value="">เรียงตามความเกี่ยวข้อง</option><option value="n">ชื่อ A–Z</option><option value="hi">ราคาสูง → ต่ำ</option><option value="lo">ราคาต่ำ → สูง</option></select>
+</div>
+<div class="chips" id="chips"></div>
+<p class="meta" id="cnt"></p>
+<div class="grid" id="out"></div>
+<div class="panel" id="nf" hidden>ไม่พบรายการที่ตรงกับคำค้น ลองคำอื่น (ไทยหรืออังกฤษ) หรือค้นต่อใน <a href="https://robrunwiki.com/en/items/" target="_blank" rel="noopener">ROB RUN Wiki ↗</a> ซึ่งมีไอเทมครบ 563 รายการ</div>
+<p class="note">หน้านี้เก็บไอเทมที่เกี่ยวกับ Collection อาวุธ เกราะ ยา ระเบิด กระเป๋า และของมีค่าที่พบบ่อย ไม่ครบทั้ง 563 รายการ ไอเทมที่ไม่มีให้ค้นต่อที่ลิงก์ ↗ ของแต่ละการ์ดหรือที่วิกิต้นทาง ราคาและแหล่งที่หาของของมีค่า ไอเทมชุด และยาบางส่วนมาจากตารางของ <a href="https://robrunwiki.com/en/" target="_blank" rel="noopener">ROB RUN Wiki</a> (วิกิไม่เป็นทางการ ข้อมูลเกมเวอร์ชัน 0.7.0 ตรวจทาน 13 พ.ย. 2026) ส่วนราคาอาวุธ เกราะ กระเป๋า ระเบิด และข้อมูลชุด Collection มาจากวิกิชุมชนอื่น ราคาฐาน Black Market ที่ดีลเลอร์ในเมืองแพงกว่าประมาณ 3 เท่า เกมยังอยู่ใน Early Access ตัวเลขเปลี่ยนตามแพตช์ ควรเช็กในเกมอีกครั้ง<br>Source: ROB RUN Wiki, an unofficial wiki for the game ROB RUN (<a href="https://robrunwiki.com/en/items/" target="_blank" rel="noopener">https://robrunwiki.com/en/items/</a>). เว็บแฟนเมด ไม่เกี่ยวข้องกับ Kefir</p>
+</div>
+
+<script>
+const CAT={V:"ของมีค่า (ขายให้ Fence)",W:"อาวุธ",A:"เกราะ / อุปกรณ์",M:"ยา",G:"ระเบิด",B:"กระเป๋า",T:"เครื่องมือ",C:"Cargo / Crate",S:"ไอเทมชุด Collection",X:"อื่นๆ"};
+const CK={V:"ลูท ขาย",W:"ปืน อาวุธ gun weapon",A:"เกราะ armor vest",M:"ยา รักษา medicine heal",G:"ระเบิด grenade",B:"กระเป๋า bag",T:"เครื่องมือ tool",C:"ลัง กล่อง cargo crate",S:"collection คอลเลกชัน",X:""};
+const RT={Common:"สามัญ",Uncommon:"ไม่ธรรมดา",Epic:"เอพิค",Legendary:"ตำนาน",Exotic:"เอ็กโซติก"};
+const PK={W:"ราคาในวิกิ (มูลค่า / ราคาขายคืน)",B:"ราคาฐาน Black Market (Mk1 สำหรับอาวุธ)",S:"ราคาขายให้ Smuggler (Notoriety Lv 1)"};
+const LOOT={"market alcohol":"ชั้นและร้านขายเหล้า","statuettes":"หมวดรูปปั้นและของเก่า","trash cans":"ถังขยะ","jewelry":"หมวดเครื่องประดับ","electronics":"หมวดอิเล็กทรอนิกส์","equipment":"หมวดอุปกรณ์","pharmacy":"ร้านขายยา"};
+const KW=[[/bottle|wine/i,"เหล้า ขวด"],[/statue|totem|figure|pitcher|antique/i,"รูปปั้น ของเก่า"],[/card|deck/i,"การ์ด ไพ่"],[/knife/i,"มีด"],[/camera|dashcam/i,"กล้อง"],[/stove/i,"เตา"],[/laptop/i,"แล็ปท็อป คอม"],[/phone/i,"มือถือ โทรศัพท์"],[/headphone/i,"หูฟัง"],[/watch/i,"นาฬิกา"],[/earring/i,"ต่างหู"],[/necklace/i,"สร้อย"],[/\bring\b/i,"แหวน"],[/lighter/i,"ไฟแช็ก"],[/perfume/i,"น้ำหอม"],[/comic/i,"การ์ตูน"],[/magazine/i,"นิตยสาร"],[/console/i,"เกมคอนโซล"],[/vial|ampule/i,"ขวดยา หลอดยา"],[/condom/i,"ถุงยาง"],[/cigar/i,"ซิการ์ บุหรี่"],[/armor|plate/i,"เกราะ"],[/grenade/i,"ระเบิด"],[/pouch|bag/i,"กระเป๋า"],[/binocular/i,"กล้องส่องทางไกล"],[/gunpowder|grease|cleaning/i,"ดินปืน ดูแลปืน"]];
+const P=`Black Pirate Bottle|V|Uncommon|306|W|L:market alcohol|alcohol_1|
+Severka Bottle|V|Uncommon|344|W|L:market alcohol|alcohol_8|
+Happy Forester Bottle|V|Epic|4590|W|L:market alcohol|alcohol_2|
+Diamond Breeze Bottle|V|Uncommon|330|W|L:market alcohol|alcohol_3|
+Krystal Light Bottle|V|Uncommon|290|W|L:market alcohol|alcohol_4|
+Fine Wine Bottle|V|Uncommon|312|W|L:market alcohol|alcohol_7|
+Omega Bottle|V|Uncommon|316|W|L:market alcohol|alcohol_9|
+Eclipse Bottle|V|Epic|5116|W|L:market alcohol|alcohol_6|
+Old Pocket Bottle|V|Epic|4760|W|L:market alcohol|alcohol_10|
+Rosefield Bottle|V|Epic|5360|W|L:market alcohol|alcohol_11|
+Krystal Authority Bottle|V|Legendary|23960|W|L:market alcohol|alcohol_12|
+Amber Shift Bottle|V|Legendary|27140|W|L:market alcohol|alcohol_13|
+Velvet Dynasty Bottle|V|Legendary|26160|W|L:market alcohol|alcohol_14|
+Golden Jaguar Bottle|V|Legendary|27700|W|L:market alcohol|alcohol_5|
+King’s Reserve Bottle|V|Exotic|200000|W|L:market alcohol|alcohol_15|
+Deity Statue|V|Epic|4300|W|L:statuettes|antique_1|
+Golden Cat Statue|V|Epic|4666|W|L:statuettes|antique_2|
+Wooden Figure|V|Uncommon|286|W|L:statuettes|antique_3|
+Stone Maiden Statue|V|Legendary|27420|W|L:statuettes|antique_4|
+Wooden Totem|V|Uncommon|346|W|L:statuettes|antique_5|
+Copper Pitcher|V|Uncommon|320|W|L:statuettes|antique_6|
+Cheap Antiques|V|Common|50|W|L:statuettes|antique_set_1|
+Eason McKinley Card|V|Legendary|22556|W|L:trash cans|baseball_card_1|
+Damon Strickland Card|V|Uncommon|210|W|L:trash cans|baseball_card_2|
+Maxwell Rivers Card|V|Uncommon|216|W|L:trash cans|baseball_card_3|
+Trent Carver Card|V|Epic|3120|W|L:trash cans|baseball_card_4|
+Bradley Sanderson Card|V|Epic|3376|W|L:trash cans|baseball_card_5|
+Harley Wanger Card|V|Exotic|217320|W|L:trash cans|baseball_card_6|
+Imperial Collectible Knife|V|Uncommon|504|W|L:jewelry|blade_1|
+Aeron Collectible Knife|V|Uncommon|590|W|L:jewelry|blade_2|
+Streamline Collectible Knife|V|Epic|5008|W|L:jewelry|blade_3|
+Cyber Collectible Knife|V|Epic|5248|W|L:jewelry|blade_4|
+Nightfall Collectible Knife|V|Legendary|27784|W|L:jewelry|blade_5|
+Shade Collectible Knife|V|Exotic|199784|W|L:jewelry|blade_6|
+Camping Stove|V|Uncommon|348|W||burner_1|
+Field Stove|V|Epic|5220|W|ซื้อ: Equipment Store ฝั่ง East|burner_2|
+High-precision Stove|V|Legendary|32904|W||burner_3|
+EOS 900 Camera|V|Uncommon|156|W|L:electronics|camera_1|
+ISE S770 Camera|V|Uncommon|210|W|L:electronics|camera_2|
+CIRCUM 360 Camera|V|Epic|2496|W|L:electronics|camera_3|
+Steel Plate|A|Uncommon|5000|W|L:equipment|armor_plate_1|ใช้ซ่อมความทนทานเกราะ แหล่งอื่นระบุราคา Black Market เริ่มต้น $1,000
+Light Body Armor|A||4000|B|ซื้อที่ Black Market|vest1_m1|
+Medium Body Armor|A||15000|B|ซื้อที่ Black Market|vest2_m1|
+Assault Body Armor|A||70000|B|ซื้อที่ Black Market|vest3_m1|
+Heavy Body Armor|A||140000|B|ซื้อที่ Black Market|vest4_m1|
+Bastion Body Armor|A||350000|B|ตามแหล่งชุมชนได้จากลูท ไม่ได้วางขาย|vest5_m1|ตัวเลขเป็นมูลค่าฐาน ขายคืนได้ประมาณ $140,000
+AFAK|M|Uncommon|5000|W|L:pharmacy|afak_1|ชุดปฐมพยาบาลทางยุทธวิธี แหล่งอื่นระบุราคา Black Market $500
+Painkillers|M||500|B|ซื้อที่ Black Market|painkiller_1|
+Injector|M||2000|B|ซื้อที่ Black Market|injector_1|ระดับ L2 ราคา $2,000 ระดับ L3 ราคา $6,000
+Flash Grenade|G||4000|B|ซื้อที่ Black Market|flash_grenade_1|
+Frag Grenade|G||14960|B|ซื้อที่ Black Market|frag_grenade_1|
+Smoke Grenade|G||5040|B|ซื้อที่ Black Market|smoke_grenade_1|
+Gas Grenade|G||0||ไม่มีข้อมูล|gas_grenade_1|
+Sports Bag|B||5000|B|ซื้อที่ Black Market||ระดับ 1 / 2 / 3 ราคา $5,000 / $15,000 / $40,000
+Versatile Pouch|B||250|B|ซื้อที่ Black Market||4 ระดับ ราคา $250 / $1,200 / $2,700 / $12,000
+DP-9|W||300|B|ซื้อที่ Black Market|dp9_m1|
+MC-10|W||3500|B|ซื้อที่ Black Market|mc10_m1|
+Harris 500|W||3500|B|ซื้อที่ Black Market|harris500_m1|
+KL-545|W||6000|B|ซื้อที่ Black Market|kl545_m1|
+LBR-44|W||20000|B|ซื้อที่ Black Market|lbr44_m1|
+STAR-H|W||27500|B|ซื้อที่ Black Market|starh_m1|
+ORDR-12|W||28000|B|ซื้อที่ Black Market|ordr12_m1|
+JP-7|W||29000|B|ซื้อที่ Black Market|jp7_m1|
+PDW90|W||30800|B|ซื้อที่ Black Market|pdw90_m1|
+RC 5.56|W||32000|B|ซื้อที่ Black Market|rc556_m1|
+Vulture 50|W||50000|B|ซื้อที่ Black Market|vulture_m1|
+DRM-14|W||103500|B|ซื้อที่ Black Market|drm14_m1|
+TAG-12K|W||110000|B|ซื้อที่ Black Market|tag12_m1|
+AP Scalar|W||115000|B|ซื้อที่ Black Market|apscalar_m1|วิกิระบุมูลค่าฐาน Mk1 $400,000 / Mk2 $800,000 / Mk3 $1,600,000
+SR Reaper|W||120000|B|ซื้อที่ Black Market|srreaper_m1|
+LM 249|W||209600|B|ซื้อที่ Black Market|m249_m2|วิกิลงเฉพาะ Mk2
+Collection Crate|C||50000|S|ได้จากการ Pack ชุด Basic หรือ Additional ที่ Collection Table|collection_reward_cargo|ขายให้ Smuggler ไม่ใช่ Fence
+Rare Collection Crate|C||150000|S|ได้จากการ Pack ชุด Special|collection_reward_cargo_3|
+Unique Collection Crate|C||500000|S|ได้จากการ Pack ชุด Unique|collection_reward_cargo_4|
+Collection Table|X||15000|B|ปลดล็อกใน Shipments ($5,000) แล้วซื้อที่ Black Market ต้องมีที่ดินของตัวเอง|collection_table|มี 4 ลิสต์ (Basic, Additional, Special, Unique) แสดงทีละ 1 ชุดต่อลิสต์
+Action Camera|X|Uncommon|5000|W||action_camera_1_cumulative|ไอเทมสะสม เติมจากการทำกิจกรรมอาชญากรรมตามระดับ Notoriety เมื่อเต็มแล้วขายได้ราคาดี
+Jammer|T|Exotic|64000|W||auto_flipper_1|เครื่องงัดขนาดกะทัดรัด ใช้ขโมยของจัดแสดงที่ Grand Hotel ทำงานเงียบและเร็ว
+Bolt Cutter|T|Uncommon|1200|W||bolt_cutter_1|ใช้ตัดสายไฟในนิคม (settlement)
+Bank Money Bag|C|Legendary|60000|W||bank_cargo_cashbag|
+Alcohol|C|Common|50|W||alcohol_box_1|เหล้าถูกจากร้านขายของชำ ไอเทมธรรมดาของชุด Alcohol
+Harvest Package|C|Uncommon|4000|W||bush_drugs_1|ผลผลิตหนาแน่น ขายเหมาคุ้มกว่าเก็บเอง
+Buletti Soltempra|X|Exotic|2000000|W||buletti_soltempra|รถ ความเร็วสูงสุด`.split("\n").map(r=>{const[n,c,r2,p,k,w,i,note]=r.split("|");return{n,c,r:r2,p:+p||0,k,w,i,note:note||"",s:[]}});
+const COL=[
+["Basic","Alcohol",["Black Pirate Bottle","Severka Bottle","Happy Forester Bottle"],"Liquor Dealer (Happy Forester ต้องหาเอง)","Alcohol"],
+["Basic","Car",["Spark Plugs","Car Headlight","DW-04"],"Car Parts Dealer (Spark Plugs ต้องหาเอง)","Car Parts"],
+["Basic","Equipment",["Field Ration","Laser Rangefinder","Binoculars"],"Armor Dealer","Carabiner Set",12120],
+["Basic","Weapons",["Gun Cleaning Kit","Gun Grease","Basic Gunpowder Kit"],"Arms Dealer","Weapon Parts",8025],
+["Basic","Jewelry",["SUGI Earrings","PEGIUET Watch","CHIPARDI Necklace"],"Jewelry Dealer","Costume Jewelry",7860],
+["Basic","Medical",["Vial With Supplements","Vial With Vaccine","Ophthalmoscope"],"Medical Supplies Dealer (Ophthalmoscope ต้องหาเอง)","Medications"],
+["Basic","Electronics",["AIR-P Laptop","G-FLOW Smartphone","AIRHEADS Headphones"],"Electronics Dealer","Electronics",5745],
+["Additional","Alcohol",["Fine Wine Bottle","Diamond Breeze Bottle","Omega Bottle"],"Liquor Dealer (Diamond Breeze: ร้านสะดวกซื้อหรือคาเฟ่)","Alcohol"],
+["Additional","Car",["Cheap Car Stereo","Affordable Dashcam","Hanging Dice"],"Stereo: ปั๊มน้ำมัน Downtown ที่เหลือหาเอง","Car Parts"],
+["Additional","Camping",["Camping Stove","Snap-Snap Lighter","Steel Carabiner"],"Armor Dealer","Carabiner Set",7455],
+["Additional","Weapons",["Gyroscope","Modern Compass","Imperial Collectible Knife"],"Knife จาก Arms Dealer ที่เหลือหาเอง","Weapon Parts"],
+["Additional","Jewelry",["MAFFI Earrings","ALON GIA Ring","ALON GIA Necklace"],"Jewelry Dealer","Costume Jewelry",8085],
+["Additional","Medical",["Thermometer","Vial With Illegal Drug","Burex Condoms"],"Medical Supplies Dealer (Vial หาเอง)","Medications"],
+["Additional","Electronics",["Key-Ten-Do Console","MS MIC Headphones","D-MAX Smartphone"],"Electronics Dealer","Electronics",7545]];
+const SP=[["CollectiToy #3 Figure","Old Huba Cigars","Mystic Card Chronicles Deck"],["Eclipse Bottle","PENARAI Watch","REFIER Necklace"],["Cyber Collectible Knife","Standard Gunpowder Kit","Reinforced Carabiner"],["Steering Wheel","Dashcam","HUBRID Laptop"],["Deity Statue","Vial With Liquid","Glucometer"],["ZTX Console","DS MAX Headphones","MAFFI Ring"],["DIGITAL SOUL Comic Book","LACROCAS Perfume","Zipit Condoms"],["Deity Statue","Car Perfume","Racer Keychain"],["Old Pocket Bottle×4","Premium Multitool","RedOlive Lighter×2"],["Professional Gun Cleaning Kit","Professional Gun Grease","Ballistic Chronograph"]];
+const UN=[["Nightfall Collectible Knife","SkyDragon Lighter","DUCHEE Perfume"],["PD STATION Laptop","Pit Bull Bobblehead","PRIDE Ring"],["High-precision Stove","Joker's Choice Deck","Refined Gunpowder Kit"],["Premium Car Compressor","Tuver Phone","Modern Tactical Binoculars"],["Krystal Authority Bottle","POLEX Watch","Playgirl Condoms"],["Beat Head Headphones","Tactical Carabiner","Drone Controller"],["MASK Comic Book","PENARAI Necklace","Royal Motors Emblem"],["OPALINE Magazine","AMINA Earrings","Cosmetic Ampule"],["Dental Loupes","Synthetic Gun Grease","Collectible Multitool"],["CollectiToy x TA","Premium Dashcam","Eason McKinley Card"]];
+const ID=Object.fromEntries(("Costume Jewelry=jewelry_pouch_1;Car Parts=car_spare_parts_1;Carabiner Set=equip_carbine_1;Weapon Parts=weaponparts_box_1;Medications=pharma_pack_1;Electronics=electronics_box_1;Spark Plugs=car_parts_parts_6;Car Headlight=car_parts_parts_2;DW-04=car_parts_parts_4;Field Ration=equipment_4;Laser Rangefinder=equipment_1;Binoculars=equipment_2;Gun Cleaning Kit=weapon_cleaning_1;Gun Grease=gun_grease_1;Basic Gunpowder Kit=gunpowder_1;SUGI Earrings=earrings_3;PEGIUET Watch=watch_1;CHIPARDI Necklace=necklace_5;Vial With Supplements=vial_1;Vial With Vaccine=vial_3;Ophthalmoscope=pharma_tools_6;AIR-P Laptop=laptop_1;G-FLOW Smartphone=phone_1;AIRHEADS Headphones=headphones_1;Cheap Car Stereo=car_device_4;Affordable Dashcam=car_device_1;Hanging Dice=car_trinket_1;Snap-Snap Lighter=lighter_1;Steel Carabiner=equip_carbine_2;Gyroscope=weapon_trinket_4;Modern Compass=weapon_trinket_5;MAFFI Earrings=earrings_4;ALON GIA Ring=ring_1;ALON GIA Necklace=necklace_1;Thermometer=pharma_tools_1;Vial With Illegal Drug=vial_7;Burex Condoms=condoms_1;Key-Ten-Do Console=console_1;MS MIC Headphones=headphones_2;D-MAX Smartphone=phone_2;Old Huba Cigars=cigar_2;Mystic Card Chronicles Deck=poker_cards_2;CollectiToy #3 Figure=toy_3;PENARAI Watch=watch_6;REFIER Necklace=necklace_4;Standard Gunpowder Kit=gunpowder_2;Reinforced Carabiner=equip_carbine_3;Steering Wheel=car_parts_parts_5;Dashcam=car_device_2;HUBRID Laptop=laptop_3;Vial With Liquid=vial_2;Glucometer=pharma_tools_3;ZTX Console=console_3;DS MAX Headphones=headphones_3;MAFFI Ring=ring_5;DIGITAL SOUL Comic Book=comics_3;LACROCAS Perfume=perfume_4;Zipit Condoms=condoms_3;Car Perfume=car_trinket_3;Racer Keychain=car_trinket_4;Professional Gun Cleaning Kit=weapon_cleaning_2;Professional Gun Grease=gun_grease_2;Ballistic Chronograph=weapon_trinket_2;Dental Loupes=pharma_tools_5;Collectible Multitool=equipment_11;Premium Multitool=equipment_10;RedOlive Lighter=lighter_3;SkyDragon Lighter=lighter_5;DUCHEE Perfume=perfume_5;PD STATION Laptop=laptop_4;Pit Bull Bobblehead=car_trinket_5;PRIDE Ring=ring_6;Joker's Choice Deck=poker_cards_5;Refined Gunpowder Kit=gunpowder_3;Premium Car Compressor=car_parts_parts_8;Tuver Phone=phone_5;Modern Tactical Binoculars=equipment_7;Playgirl Condoms=condoms_5;POLEX Watch=watch_5;Beat Head Headphones=headphones_5;Tactical Carabiner=equip_carbine_4;Drone Controller=weapon_trinket_3;MASK Comic Book=comics_5;PENARAI Necklace=necklace_6;Royal Motors Emblem=car_parts_parts_1;OPALINE Magazine=journal_5;AMINA Earrings=earrings_2;Cosmetic Ampule=vial_5;Synthetic Gun Grease=gun_grease_3;CollectiToy x TA=toy_5;Premium Dashcam=car_device_3").split(";").map(s=>s.split("=")));
+
+const M={};P.forEach(x=>M[x.n]=x);
+const ent=n=>M[n]||(M[n]={n,c:"S",r:"",p:0,k:"",w:"",i:"",note:"",s:[]});
+const RARE="ของหายาก หาจากการปล้นเป้าหมายใหญ่";
+COL.forEach(([l,t,it,src,cm,d])=>{const lab=l+" · "+t;it.forEach(n=>ent(n).s.push({lab,src,d}));ent(cm).s.push({lab:lab+" (ต้องใช้ 10 ชิ้น)",src:"ขโมยในอาคารที่ตรงธีม ไม่มีดีลเลอร์ขาย"})});
+[["Special",SP],["Unique",UN]].forEach(([l,a])=>a.forEach((set,j)=>set.forEach(n=>{const[nm,q]=n.split("×");ent(nm).s.push({lab:l+" #"+(j+1)+(q?" (ต้องใช้ "+q+" ชิ้น)":""),src:RARE})})));
+const items=Object.values(M);
+items.forEach(x=>{if(!x.i)x.i=ID[x.n]||"";x.h=[x.n,CAT[x.c],CK[x.c],KW.filter(k=>k[0].test(x.n)).map(k=>k[1]).join(" "),x.r,RT[x.r]||"",x.w,x.note,x.s.map(s=>s.lab+" "+s.src).join(" ")].join(" ").toLowerCase()});
+
+const $=s=>document.querySelector(s),fmt=x=>"$"+Math.round(x).toLocaleString("en-US");
+function card(x){
+ const w=x.w?(x.w.startsWith("L:")?"ลูท: "+(LOOT[x.w.slice(2)]||x.w.slice(2))+" ("+x.w.slice(2)+")":x.w):"";
+ const url="https://robrunwiki.com/en/items/"+(x.i?x.i+"/":"");
+ return `<article class="card"><header><h3>${x.n}</h3>${x.r?`<span class="badge r${x.r}">${RT[x.r]}</span>`:""}</header><div class="meta" style="margin:0">${CAT[x.c]}</div>
+<div class="price">${x.p?fmt(x.p):"ไม่ระบุราคา"}<small>${x.p?PK[x.k]:"วิกิต้นทางยังไม่ระบุราคา"}</small></div>
+<dl><dt>หาได้จาก</dt><dd>${w||(x.s.length?"ดูแหล่งตามชุดด้านล่าง":"วิกิต้นทางยังไม่ระบุ")}</dd>${x.s.length?`<dt>ใช้ในชุด Collection</dt><dd>${x.s.map(s=>`<div>${s.lab}<br><small>${s.src}${s.d?" · ซื้อครบ 3 ชิ้นจากดีลเลอร์ ≈ "+fmt(s.d):""}</small></div>`).join("")}</dd>`:""}${x.note?`<dt>หมายเหตุ</dt><dd>${x.note}</dd>`:""}</dl>
+<a href="${url}" target="_blank" rel="noopener">ดูรายละเอียดในวิกิต้นทาง ↗</a></article>`}
+function view(){
+ const q=$("#q").value.toLowerCase().split(/\s+/).filter(Boolean),c=$("#cat").value,so=$("#sort").value;
+ const a=items.filter(x=>(!c||x.c===c)&&q.every(t=>x.h.includes(t)));
+ if(so==="n")a.sort((x,y)=>x.n.localeCompare(y.n));
+ if(so==="hi")a.sort((x,y)=>y.p-x.p);
+ if(so==="lo")a.sort((x,y)=>(x.p||1e12)-(y.p||1e12));
+ $("#cnt").textContent="พบ "+a.length+" จาก "+items.length+" รายการในหน้านี้"+(a.length>150?" (แสดง 150 รายการแรก พิมพ์เพิ่มเพื่อกรอง)":"");
+ $("#out").innerHTML=a.slice(0,150).map(card).join("");
+ $("#nf").hidden=a.length>0;
+}
+$("#cat").innerHTML='<option value="">ทุกหมวด</option>'+Object.entries(CAT).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+$("#chips").innerHTML=["ปืน","เกราะ","ยา","ระเบิด","กระเป๋า","เหล้า","มีด","นาฬิกา","Special","Unique","Dealer"].map(t=>`<button data-q="${t}">${t}</button>`).join("");
+$("#chips").addEventListener("click",e=>{const b=e.target.closest("button");if(b){$("#q").value=b.dataset.q;view()}});
+["#q","#cat","#sort"].forEach(s=>$(s).addEventListener("input",view));
+view();
+</script>
+<script>(()=>{const f=()=>{try{const v=JSON.parse(localStorage.getItem("robrun_run_v1")||"{}").v||{};document.getElementById("hmv").textContent="$"+Math.round((+v.hd||0)+(+v.hc||0)).toLocaleString("en-US")}catch(e){}};f();addEventListener("storage",f);addEventListener("focus",f)})()</script>
+</body>
+</html>
