@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROB RUN Goals</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--tx:#14171c;--mu:#5b6470;--bd:#d8dce2;--ac:#d93b30;--ok:#1b9a52;--chip:#eef0f3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Sarabun",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:24px;margin:4px 0}h3{font-size:15px;margin:0}
+.sub{color:var(--mu);margin:0 0 14px}small,.meta{color:var(--mu);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat,.panel,.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:21px}.stat span{color:var(--mu);font-size:13px}.stat.big{border-color:var(--ac)}.stat.big b{color:var(--ac)}.stat.okb b{color:var(--ok)}
+.panel{margin-top:12px}
+input,select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:6px 10px}
+button{cursor:pointer}button:hover{border-color:var(--ac)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}.tabs button.on,button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.card{display:flex;flex-direction:column;gap:6px}.card.goal{border-color:var(--ac)}.card.done{border-color:var(--ok)}
+.cm{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px}.cm button{padding:0 9px}
+.chip{font-size:12px;padding:2px 9px;border-radius:20px;background:var(--chip)}.chip.ok{background:var(--ok);color:#fff}.chip.no{color:var(--ac)}
+.bar{height:8px;background:var(--chip);border-radius:6px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:5px 4px;border-bottom:1px solid var(--bd);text-align:right}td:first-child,th:first-child{text-align:left}th{color:var(--mu);font-weight:600;font-size:12.5px}
+.cars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ct{text-align:left;display:flex;flex-direction:column;gap:2px;padding:8px 10px}.ct.on{background:var(--chip);border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}.ct b{font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.sr>div:first-child{display:flex;justify-content:space-between;font-size:15px}.sr{margin-bottom:10px}
+.sb{position:relative;height:10px;background:var(--chip);border-radius:6px;overflow:hidden;margin:3px 0}.sb i,.sb u{position:absolute;top:0;bottom:0;left:0}.sb i{background:var(--ok)}
+.sb u{background:repeating-linear-gradient(45deg,var(--chip),var(--chip) 4px,var(--bd) 4px,var(--bd) 8px)}
+.f{display:flex;flex-direction:column;gap:2px;font-size:12.5px;color:var(--mu)}.f select{width:100%}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin:8px 0}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--bd)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.pg{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:14px;flex-wrap:wrap}
+.pgt{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mu);font-weight:600;font-size:14px;white-space:nowrap}.pgt:hover{color:var(--tx)}.pgt.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.money{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;background:var(--card);border:2px solid var(--ok);border-radius:14px;padding:6px 16px;text-decoration:none;color:var(--tx)}.money small{font-size:12px}.money b{font-size:24px;color:var(--ok)}
+.note{font-size:12.5px;color:var(--mu);margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><nav class="pg"><a class="pgt" href="index.html">📋 Collection Tracker</a><a class="pgt" href="rob-run-planner.html">💰 Run Planner</a><a class="pgt on" aria-current="page">🎯 Goals</a><a class="pgt" href="rob-run-weed.html">🌿 Weed Calc</a><a class="pgt" href="rob-run-wiki.html">📖 Item Wiki</a></nav><a class="money" href="rob-run-planner.html" title="กดเพื่อแก้เงินที่บ้านใน Run Planner"><small>🏠 เงินที่บ้าน</small><b id="hmv">$0</b></a></header>
+<h1>🎯 ROB RUN Goals</h1>
+<p class="sub">เลือกสิ่งที่อยากได้ (รถ บ้าน อุปกรณ์ปลูก กล่อง เซฟ ฟิวส์ workbench) แล้วดูราคารวมเทียบกับเงินที่บ้านจาก Run Planner (บันทึกในเบราว์เซอร์อัตโนมัติ)</p>
+<div class="stats" id="stats"></div>
+<div class="panel" id="sum"></div>
+<div class="tabs" id="tabs"></div>
+<div id="main"></div>
+<p class="note">ราคาเป็นราคาซื้อบน Trade Laptop และราคา Research จาก MetaForge, robrungg.wiki, robrunwiki.com, robrunstatus.com (build 0.7.0.x ต้นพ.ย. 2026) บางแหล่งไม่ตรงกันและเปลี่ยนตามแพตช์ ช่องที่ขึ้น "?" คือยังไม่มีข้อมูล Research (นับเป็น $0) Stats รถ base/max มาจาก robrunwiki.com ส่วนค่า "≈" เป็นค่าประมาณ เพราะเกมไม่เปิดเผยว่าแต่ละชิ้นเพิ่มเท่าไหร่ (แบ่งเท่าๆ ตามระดับชิ้นส่วน) เงินที่บ้านนับ Dirty + Clean ใน Run Planner เว็บแฟนเมด ไม่เกี่ยวข้องกับ Kefir</p>
+</div>
+<script>
+const $=s=>document.querySelector(s),fmt=n=>"$"+Math.round(n).toLocaleString("en-US");
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+let S=Object.assign({q:{},o:{},rd:{},cars:{},ord:[],sel:"royalj",tab:"car",nr:0},ld("robrun_goals_v1",{}));
+const save=()=>{try{localStorage.setItem("robrun_goals_v1",JSON.stringify(S))}catch(e){}};
+const money=()=>{const v=ld("robrun_run_v1",{}).v||{};return(+v.hd||0)+(+v.hc||0)};
+const CAT={h:"🏠 บ้านและที่ดิน",w:"🌿 ปลูกกัญชา",s:"📦 กล่อง เซฟ โต๊ะสะสม",f:"⚡ ฟิวส์และป้องกัน",b:"🛠️ Workbench และโรงงาน"};
+// id|หมวด|ชื่อ|ราคาซื้อ|Research(? = ไม่ทราบ)|ต้อง Research ก่อน|หมายเหตุ
+const IT=`plot1|h|Land Plot Title Lv1|100000|50000||เช่าที่ดิน ได้ Trailer ฟรี (ป้องกัน 5 · ช่องฟิวส์ 9)
+plot2|h|Land Plot Title Lv2|800000|200000|plot1|ที่ดินเขต Lv2
+plot3|h|Land Plot Title Lv3|2000000|1000000|plot2|ต้องอยู่นิคม Lv2 ก่อน
+set1|h|Settlement Title Lv1|200000|100000||ซื้อทั้งนิคม ได้ที่ฟรี 1 แปลง
+set2|h|Settlement Title Lv2|2000000|500000|set1|
+set3|h|Settlement Title Lv3|6000000|2000000|set2|
+small|h|Small House|600000|200000|plot2|ป้องกัน 15 · ช่องฟิวส์ 27 · Workbench 2 · เก็บของ 7
+mansion|h|Mansion|1500000|?|small|ป้องกัน 30 · ช่องฟิวส์ 42
+garage|h|Car Garage|25000|10000||ที่จอดรถ
+lgarage|h|Large Car Garage|70000|40000|garage|
+heli|h|Helipad|500000|200000||
+mesh|h|Mesh Fence|15000|25000||ป้องกัน 2
+metal|h|Metal Fence|50000|100000|mesh|ป้องกัน 5
+concrete|h|Concrete Fence|500000|200000|metal|ป้องกัน 10
+growroom|w|Grow Room|100000|150000||ห้องปลูก (ป้องกัน 5 · ช่องฟิวส์ 9)
+table|w|Grow Table (6 ต้น/โต๊ะ)|40000|30000|growroom|ใส่ได้สูงสุด 6 โต๊ะ = 36 ต้น
+fan|w|Fan (+12% ความเร็ว)|25000|100000|growroom|
+pump|w|Water Pump (+14%)|70000|200000|growroom|
+uv|w|UV Lamp (+24%)|250000|500000|growroom|
+rack1|s|Small Rack|3500|12000||ชั้นเก็บของถูกสุด
+rack2|s|Medium Rack|26500|25000|rack1|
+rack3|s|Large Rack|46500|45000|rack2|
+nst1|s|Small Nightstand|4000|15000||
+nst2|s|Medium Nightstand|29200|30000|nst1|
+nst3|s|Large Nightstand|45400|50000|nst2|
+safe1|s|Small Safe|32000|50000||ต้องใช้ Master Key เปิด
+safe2|s|Medium Safe|68000|100000|safe1|
+safe3|s|Large Safe|127000|150000|safe2|
+scab1|s|Small Security Cabinet|30300|40000||ต้องมี Jail Time 30 ปี
+scab2|s|Medium Security Cabinet|70000|?|scab1|
+scab3|s|Large Security Cabinet|132000|?|scab2|
+wh|s|Warehouse|100000|130000||โกดังเก็บของเยอะ
+ct1|s|Collection Table (Basic)|15000|5000||
+ct2|s|Additional Collection|34000|25000|ct1|
+ct3|s|Special Collection|100000|50000|ct2|
+ct4|s|Unique Collection|250000|100000|ct3|
+fz1|f|Electronic Fuse (เขียว +1)|20000|10000||ราคาต่อป้องกัน 1 แต้มถูกสุด
+fz2|f|Electronic Fuse (ม่วง +3)|100000|150000|fz1|ต้องนิคม Lv2
+fz3|f|Electronic Fuse (ทอง +5)|250000|500000|fz2|ต้องนิคม Lv3
+alarm|f|Alarm System|30000|?||แจ้งเตือนเมื่อโดนบุก
+cargo|b|Cargo Workbench|15000|5000||เปิดลัง เซฟ กระเป๋า
+contra|b|Contraband Workbench|20000|20000||แพ็ก Contraband ขาย Smuggler
+label|b|Label Printer|30000|15000||
+lift|b|Vehicle Lift|10000|5000||ติดตั้งชิ้นส่วนรถ
+lock|b|Locksmith Tools|15000|?||
+saw|b|Cargo Saw|41000|45000||
+vise|b|Bench Vise|250000|100000||
+tbox|b|Tool Box|200000|150000||
+shop|b|Workshop|75000|125000||ที่วาง Workbench 4 ช่อง
+fa|b|First Aid Cabinet|15000|5000||รักษาและเกิดที่ฐาน
+count|b|Banknote Counter|30000|?||อัปเกรด Laundering Desk
+reactor|b|Chemical Reactor|40000|20000||
+lab|b|Chemical Laboratory|110000|160000||
+conv|b|Chemical Converter|300000|150000||
+ltab|b|Lab Table|15000|10000||
+eng|b|Industrial Engine|20000|10000||
+frz|b|Industrial Freezer|20000|15000||`;
+const IM={},R={},I=[];
+IT.split("\n").forEach(l=>{const[id,c,n,p,r,pre,note]=l.split("|"),o={id,c,n,p:+p,r:r==="?"?0:+r,u:r==="?",pre:pre?[pre]:[],note:note||""};I.push(o);IM[id]=o;R[id]={n,c:o.r,pre:o.pre}});
+// id|ชื่อ|ราคา|Research|ต้องก่อน|speed ฐาน|speed เต็ม|accel|handling เต็ม|แถวท้ายรถ|ช่องถุง|cargo|ช่อง rack
+const CARS=`van|Longhorn Van|180000|50000||30|30|20|30|8|2|6|3
+tensa|Fukurou Tensa|200000|50000||30|40|40|30|2|1|1|1
+titan|Longhorn Titan|900000|200000|van|55|55|45|60|6|2|6|1
+royale|Royal E|1000000|200000|tensa|62|62|70|50|3|1|2|1
+royalj|Royal J|4000000|500000|titan|65|65|85|60|6|3|4|2
+wild|Longhorn Wild|4500000|500000|royale|75|75|90|20|3|1|1|1
+bulet|Buletti Soltempra|10000000|2000000|wild|90|90|95|40|2|1|0|0`.split("\n").map(l=>{const a=l.split("|");R[a[0]]={n:a[1],c:+a[3],pre:a[4]?[a[4]]:[]};return{id:a[0],n:a[1],p:+a[2],s0:+a[5],s1:+a[6],a:+a[7],h1:+a[8],rows:+a[9],bs:+a[10],cg:+a[11],rs:+a[12]}});
+// ชิ้นส่วน: [ชื่อ, ราคา, Research, เพิ่มแถว/ช่อง]
+const PT={ecu:[["ECU",14000,30000],["Improved ECU",75000,160000],["High-performance ECU",330000,260000]],turbo:[["Turbo Kit",79500,110000],["Improved Turbo Kit",238000,210000]],ic:[["Intercooler",72000,120000],["Improved Intercooler",270000,200000]],sr:[["Steering Rack",68000,100000],["Reinforced Steering Rack",270000,220000]],disc:[["Brake Rotor",11500,0],["Racing Rotor",61500,100000]],bag:[["Trunk Bags +1",1200,20000,1],["Large Trunk Bags +2",70500,130000,2],["Spacious Trunk Bags +3",270000,220000,3]],rack:[["Cargo Rack +1",86500,150000,1],["Reinforced Cargo Rack +2",350000,250000,2]],radio:[["Police Radio",300000,200000]]};
+const PRE={turbo1:"royale",rack1:"titan",bag1:"van"};
+Object.entries(PT).forEach(([k,a])=>a.forEach((x,i)=>R["p_"+k+(i+1)]={n:x[0],c:x[2],pre:i?["p_"+k+i]:(PRE[k+1]?[PRE[k+1]]:[])}));
+const cs=id=>S.cars[id]||(S.cars[id]={want:0,own:0,p:{}});
+const kd=k=>k.replace(/\d+$/,"");
+const owned=id=>(S.o[id]>0)||(S.cars[id]&&S.cars[id].own);
+function need(id,out=[],seen=new Set()){if(seen.has(id)||S.rd[id]||owned(id))return out;seen.add(id);out.push(id);R[id].pre.forEach(p=>need(p,out,seen));return out}
+function carCost(c){const st=cs(c.id);let pr=0,nd=[];Object.entries(st.p).forEach(([k,v])=>{if(v>0){pr+=PT[kd(k)][v-1][1];nd.push(...need("p_"+kd(k)+v))}});if(!st.own)nd.push(...need(c.id));nd=[...new Set(nd)];return{cp:st.own?0:c.p,pr,nd,rc:nd.reduce((s,i)=>s+R[i].c,0)}}
+function stat(c){const p=cs(c.id).p,L=k=>p[k]||0;let rows=c.rows,cg=c.cg;for(let i=0;i<c.bs;i++)if(L("bag"+i))rows+=PT.bag[L("bag"+i)-1][3];for(let i=0;i<c.rs;i++)if(L("rack"+i))cg+=PT.rack[L("rack"+i)-1][3];return{s:c.s0+(c.s1-c.s0)*L("ecu")/3,a:c.a,h:10+(c.h1-10)*(L("sr")+L("disc"))/4,rows,cg}}
+function ents(){return S.ord.map(k=>{if(k[0]==="c"&&k[1]===":"){const c=CARS.find(x=>x.id===k.slice(2)),st=cs(c.id);if(!st.want)return null;const q=carCost(c);return{k,n:c.n,buy:q.cp+q.pr,nd:q.nd}}
+ const it=IM[k],q=S.q[k]||0;if(!q)return null;const n=Math.max(0,q-(S.o[k]||0));return{k,n:it.n+(q>1?" ×"+q:""),buy:n*it.p,nd:n?need(k):[],done:!n}}).filter(Boolean)}
+function totals(){const seen=new Set();let cum=0;const rows=ents().map(e=>{const rs=e.nd.filter(i=>!seen.has(i));rs.forEach(i=>seen.add(i));const rc=S.nr?0:rs.reduce((s,i)=>s+R[i].c,0),cost=e.buy+rc;cum+=cost;return{...e,rc,cost,cum}});return{rows,total:cum}}
+function setGoal(k,on){const i=S.ord.indexOf(k);if(on&&i<0)S.ord.push(k);if(!on&&i>=0)S.ord.splice(i,1)}
+function draw(){const m=money(),T=totals(),d=m-T.total;$("#hmv").textContent=fmt(m);
+ $("#stats").innerHTML=`<div class="stat"><b>${fmt(m)}</b><span>เงินที่บ้าน (Run Planner)</span></div><div class="stat big"><b>${fmt(T.total)}</b><span>ต้องใช้รวมทุกเป้าหมาย</span></div><div class="stat ${d>=0?"okb":"big"}"><b>${fmt(Math.abs(d))}</b><span>${d>=0?"เงินเหลือหลังซื้อครบ":"ยังขาดอีก"}</span></div><div class="stat"><b>${T.rows.filter(r=>!r.done).length}</b><span>เป้าหมายที่ยังไม่ครบ</span></div>`;
+ $("#sum").innerHTML=`<h3>📋 เป้าหมายของฉัน (เรียงตามลำดับที่จะซื้อ)</h3><label class="cm" style="margin:6px 0"><input type="checkbox" data-a="nr" ${S.nr?"":"checked"}> นับค่า Research (ติ๊กออกถ้าวิจัยครบแล้ว)</label><div class="bar"><i style="width:${T.total?Math.min(100,m/T.total*100):0}%"></i></div>`+(T.rows.length?`<table><tr><th>รายการ</th><th>ซื้อ</th><th>Research</th><th>สะสม</th><th></th><th></th></tr>${T.rows.map((r,i)=>`<tr><td>${r.n}${r.done?" ✅":""}</td><td>${fmt(r.buy)}</td><td>${fmt(r.rc)}</td><td>${fmt(r.cum)}</td><td><span class="chip ${r.cum<=m?"ok":"no"}">${r.cum<=m?"เงินพอ":"ขาด "+fmt(r.cum-m)}</span></td><td style="white-space:nowrap"><button data-a="mv" data-i="${i}" data-d="-1">▲</button><button data-a="mv" data-i="${i}" data-d="1">▼</button><button data-a="rm" data-k="${r.k}">✕</button></td></tr>`).join("")}</table>`:`<p class="meta">ยังไม่มีเป้าหมาย เลือกรถหรือกด + ที่ช่อง "เป้าหมาย" ในแท็บด้านล่าง</p>`)}
+const stp=(a,k,v)=>`<button data-a="${a}" data-k="${k}" data-d="-1">−</button><b>${v}</b><button data-a="${a}" data-k="${k}" data-d="1">+</button>`;
+function itemCard(it){const q=S.q[it.id]||0,o=S.o[it.id]||0,rd=!!S.rd[it.id]||o>0,n=need(it.id),c=it.p+n.reduce((s,i)=>s+R[i].c,0),m=money();
+ return `<div class="card ${q&&q<=o?"done":q?"goal":""}"><h3>${it.n}</h3><div class="meta">ซื้อ <b>${fmt(it.p)}</b> · Research <b>${it.u?"?":fmt(it.r)}</b>${it.pre.length?" (ต้อง "+R[it.pre[0]].n+" ก่อน)":""}${it.note?"<br>"+it.note:""}</div><div class="cm">🎯 เป้าหมาย ${stp("q",it.id,q)}</div><div class="cm">✅ มีแล้ว ${stp("o",it.id,o)} <label style="margin-left:auto"><input type="checkbox" data-a="rd" data-k="${it.id}" ${rd?"checked":""} ${o>0?"disabled":""}> วิจัยแล้ว</label></div><span class="chip ${c<=m?"ok":"no"}">${c<=m?"เงินพอซื้อ 1 ชิ้น":"ขาด "+fmt(c-m)} (รวม Research ${fmt(c-it.p)})</span></div>`}
+function carView(){const c=CARS.find(x=>x.id===S.sel),st=cs(c.id),sv=stat(c),q=carCost(c),m=money(),tot=q.cp+q.pr+(S.nr?0:q.rc);
+ const bar=(nm,v,b,mx)=>`<div class="sr"><div><b>${nm}</b><b>${Math.round(v)}</b></div><div class="sb"><i style="width:${v}%"></i><u style="left:${v}%;width:${Math.max(0,mx-v)}%"></u></div><small>base ${b} · max ${mx}${mx>b?" (≈)":""} · อันดับ #${1+CARS.filter(x=>({s:x.s1,a:x.a,h:x.h1})[nm[0]==="S"?"s":nm[0]==="A"?"a":"h"]>v).length}/7 (เทียบรถอัปเกรดเต็ม)</small></div>`;
+ const sl=[["ecu","ECU"],["turbo","Turbo Kit"],["ic","Intercooler"],["sr","Steering Rack"],["disc","Racing Disc"]].concat([...Array(c.bs)].map((_,i)=>["bag"+i,"Trunk Bag "+(i+1)]),[...Array(c.rs)].map((_,i)=>["rack"+i,"Cargo Rack "+(i+1)]),[["radio","Radio"]]);
+ const sel=([k,l])=>`<label class="f">${l}<select data-s="${k}"><option value="0">— ว่าง —</option>${PT[kd(k)].map((x,i)=>`<option value="${i+1}" ${(st.p[k]||0)==i+1?"selected":""}>${x[0]} · ${fmt(x[1])}</option>`).join("")}</select></label>`;
+ return `<div class="cars">${CARS.map(x=>`<button class="ct ${x.id===S.sel?"on":""}" data-a="car" data-k="${x.id}"><b>${x.n}</b><span>${fmt(x.p)}</span><small>S ${x.s0}${x.s1>x.s0?"→"+x.s1:""} · A ${x.a} · H 10→${x.h1}</small><small>ท้ายรถ ${x.rows} แถว · cargo ${x.cg}</small>${cs(x.id).want?'<span class="chip ok">เป้าหมาย</span>':cs(x.id).own?'<span class="chip">มีแล้ว</span>':""}</button>`).join("")}</div>
+ <div class="panel two"><div><h3 style="font-size:19px">${c.n} <span style="color:var(--ok)">${fmt(c.p)}</span></h3><div class="cm" style="margin:8px 0"><button data-a="cw" class="${st.want?"on":""}">🎯 ${st.want?"เป็นเป้าหมายแล้ว":"ตั้งเป็นเป้าหมาย"}</button><button data-a="co" class="${st.own?"on":""}">✅ ${st.own?"มีรถคันนี้แล้ว":"มีรถแล้ว"}</button></div>${bar("Speed",sv.s,c.s0,c.s1)}${bar("Acceleration",sv.a,c.a,c.a)}${bar("Handling",sv.h,10,c.h1)}<div class="meta">ท้ายรถ <b>${sv.rows}</b> แถว (${sv.rows*6} ช่อง) · Cargo <b>${sv.cg}</b> ช่อง · ช่องถุง ${c.bs} · ช่อง rack ${c.rs}</div></div>
+ <div><h3>🔧 ชิ้นส่วน (ติดตั้งแล้วอยู่ในรถ ไม่หายตอนตาย)</h3><div class="slots">${sl.map(sel).join("")}</div><div class="cm"><button data-a="best">⭐ ชิ้นส่วนดีที่สุด</button><button data-a="clr">ล้างช่อง</button></div>
+ <table style="margin-top:8px"><tr><td>ราคารถ${st.own?" (มีแล้ว)":""}</td><td>${fmt(q.cp)}</td></tr><tr><td>ชิ้นส่วน</td><td>${fmt(q.pr)}</td></tr><tr><td>Research (รถ+ชิ้นส่วน${S.nr?" · ไม่นับ":""})</td><td>${fmt(S.nr?0:q.rc)}</td></tr><tr><td><b>รวม</b></td><td><b>${fmt(tot)}</b></td></tr><tr><td>เทียบเงินที่บ้าน</td><td><span class="chip ${tot<=m?"ok":"no"}">${tot<=m?"เงินพอ เหลือ "+fmt(m-tot):"ขาด "+fmt(tot-m)}</span></td></tr></table></div></div>`}
+function render(){draw();$("#tabs").innerHTML=[["car","🚗 รถ"],...Object.entries(CAT)].map(([k,v])=>`<button data-a="tab" data-k="${k}" class="${S.tab===k?"on":""}">${v}</button>`).join("");
+ $("#main").innerHTML=S.tab==="car"?carView():`<div class="grid">${I.filter(x=>x.c===S.tab).map(itemCard).join("")}</div>`}
+function sync(k,d){const m=k=>Math.max(0,Math.min(99,(S.q[k]||0)+d));if(d)S.q[k]=m(k)}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b||b.tagName==="SELECT")return;const a=b.dataset.a,k=b.dataset.k,d=+b.dataset.d,c=CARS.find(x=>x.id===S.sel);
+ if(a==="tab")S.tab=k;else if(a==="car")S.sel=k;
+ else if(a==="q"){S.q[k]=Math.max(0,Math.min(99,(S.q[k]||0)+d));setGoal(k,S.q[k]>0)}
+ else if(a==="o")S.o[k]=Math.max(0,Math.min(99,(S.o[k]||0)+d));
+ else if(a==="cw"){const s=cs(c.id);s.want=s.want?0:1;setGoal("c:"+c.id,s.want)}
+ else if(a==="co"){const s=cs(c.id);s.own=s.own?0:1}
+ else if(a==="best"){const s=cs(c.id);["ecu","turbo","ic","sr","disc","radio"].forEach(x=>s.p[x]=PT[x].length);for(let i=0;i<c.bs;i++)s.p["bag"+i]=3;for(let i=0;i<c.rs;i++)s.p["rack"+i]=2}
+ else if(a==="clr")cs(c.id).p={};
+ else if(a==="mv"){const i=+b.dataset.i,r=totals().rows,j=i+d;if(j>=0&&j<r.length){const x=S.ord.indexOf(r[i].k),y=S.ord.indexOf(r[j].k);[S.ord[x],S.ord[y]]=[S.ord[y],S.ord[x]]}}
+ else if(a==="rm"){if(k[0]==="c"&&k[1]===":")cs(k.slice(2)).want=0;else S.q[k]=0;setGoal(k,false)}
+ else return;save();render()});
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset.s){cs(S.sel).p[t.dataset.s]=+t.value}else if(t.dataset.a==="rd")S.rd[t.dataset.k]=t.checked;else if(t.dataset.a==="nr")S.nr=t.checked?0:1;else return;save();render()});
+addEventListener("storage",render);addEventListener("focus",render);render();
+</script>
+ <script src="storage-manager.js"></script>
+</body>
+</html>
