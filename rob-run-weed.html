@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROB RUN Weed Calc</title>
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--tx:#14171c;--mu:#5b6470;--bd:#d8dce2;--ac:#d93b30;--ok:#1b9a52;--chip:#eef0f3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1216;--card:#171b21;--tx:#e8ebef;--mu:#98a2b0;--bd:#2a313b;--ac:#ff5a4d;--ok:#3ecf7b;--chip:#222831;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Sarabun",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:24px;margin:4px 0}h3{font-size:15px;margin:0 0 8px}
+.sub{color:var(--mu);margin:0 0 14px}small,.meta{color:var(--mu);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+.stat,.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:21px}.stat span{color:var(--mu);font-size:13px}.stat.big{border-color:var(--ac)}.stat.big b{color:var(--ac)}.stat.okb{border-color:var(--ok)}.stat.okb b{color:var(--ok)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mu);margin-bottom:8px}
+input,select{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:7px 10px;width:100%}
+input[type=checkbox]{width:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:5px 4px;border-bottom:1px solid var(--bd);text-align:right}td:first-child,th:first-child{text-align:left}th{color:var(--mu);font-weight:600;font-size:12.5px}
+.msg{margin:8px 0 0}.good{color:var(--ok)}.bad{color:var(--ac)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:8px 0;margin-bottom:8px;border-bottom:1px solid var(--bd)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.pg{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:14px;flex-wrap:wrap}
+.pgt{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mu);font-weight:600;font-size:14px;white-space:nowrap}.pgt:hover{color:var(--tx)}.pgt.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.money{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;background:var(--card);border:2px solid var(--ok);border-radius:14px;padding:6px 16px;text-decoration:none;color:var(--tx)}.money small{font-size:12px}.money b{font-size:24px;color:var(--ok)}
+.note{font-size:12.5px;color:var(--mu);margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><nav class="pg"><a class="pgt" href="index.html">📋 Collection Tracker</a><a class="pgt" href="rob-run-planner.html">💰 Run Planner</a><a class="pgt" href="rob-run-goals.html">🎯 Goals</a><a class="pgt on" aria-current="page">🌿 Weed Calc</a><a class="pgt" href="rob-run-wiki.html">📖 Item Wiki</a></nav><a class="money" href="rob-run-planner.html" title="กดเพื่อแก้เงินที่บ้านใน Run Planner"><small>🏠 เงินที่บ้าน</small><b id="hmv">$0</b></a></header>
+<h1>🌿 ROB RUN Weed Calc</h1>
+<p class="sub">คำนวณต้นทุนห้องปลูก รายได้ต่อรอบเก็บเกี่ยว จุดคุ้มทุน และกำไรก่อน wipe (บันทึกในเบราว์เซอร์อัตโนมัติ)</p>
+<div class="stats" id="stats"></div>
+<div class="grid">
+<section class="panel"><h3>🏗️ ห้องปลูกและอุปกรณ์</h3>
+<label class="f">Grow Room<select id="room"><option value="0">ยังไม่มี (ซื้อ + วิจัย)</option><option value="1">มีแล้ว</option></select></label>
+<label class="f">จำนวน Grow Table (6 ต้น/โต๊ะ สูงสุด 6)<input id="tbl" type="number" min="1" max="6"></label>
+<label class="f">โต๊ะที่มีอยู่แล้ว<input id="town" type="number" min="0" max="6"></label>
+<label class="f">Fan (+12% ความเร็ว)<select id="fan"></select></label>
+<label class="f">Water Pump (+14%)<select id="pump"></select></label>
+<label class="f">UV Lamp (+24%)<select id="uv"></select></label>
+<label class="cm"><input id="res" type="checkbox"> นับค่า Research ในต้นทุน</label></section>
+<section class="panel"><h3>🌱 การปลูกและขาย</h3>
+<label class="f">จำนวนต้นที่ปลูกจริง (ต้องหา Growing Bush มาเอง)<input id="pl" type="number" min="1"></label>
+<label class="f">ถุงต่อต้น (2–4)<select id="bg"><option>2</option><option>3</option><option>4</option></select></label>
+<label class="f">ราคาถุงเฉลี่ย (ตามระดับหายาก)<select id="bp"><option value="4000">Uncommon $4,000</option><option value="6000">Epic $6,000</option><option value="8000">Legendary $8,000</option></select></label>
+<label class="f">โบนัส Notoriety ตอนขาย (%)<input id="nt" type="number" min="0" max="50"></label>
+<label class="f">ราคาต้นไม้ถ้าขาย Smuggler แทน (ต้นทุนเสียโอกาส)<select id="bush"><option value="20000">Uncommon $20,000</option><option value="30000">Epic $30,000</option><option value="40000">Legendary $40,000</option></select></label>
+<label class="cm"><input id="opp" type="checkbox"> นับมูลค่าต้นไม้เป็นต้นทุน</label></section>
+<section class="panel"><h3>⏱️ เวลา</h3>
+<label class="f">รอบปลูกพื้นฐาน (นาที, รายงานผู้เล่น 45–120)<input id="cy" type="number" min="10"></label>
+<label class="f">เริ่มสร้างห้องวันที่เท่าไหร่ของรอบ wipe (7 วัน)<select id="day"></select></label>
+<label class="f">ล็อกอินมาเก็บเกี่ยวได้กี่ครั้งต่อวัน<input id="hd" type="number" min="1" max="48"></label>
+<p class="meta">ต้นไม้โตต่อแม้ออฟไลน์ แต่ต้องล็อกอินมาเก็บเกี่ยว จึงจำกัดรอบตามจำนวนครั้งที่ล็อกอิน</p></section>
+</div>
+<div class="panel" id="out"></div>
+<div class="panel" id="sc"></div>
+<p class="note">ข้อมูลจาก robrungg.wiki (build 0.7.0.4005, 19 พ.ย. 2026): Grow Room ซื้อ $100,000 วิจัย $150,000 · Table ซื้อ $40,000 วิจัย $30,000 · Fan ซื้อ $25,000 วิจัย $100,000 · Pump ซื้อ $70,000 วิจัย $200,000 · UV ซื้อ $250,000 วิจัย $500,000 อุปกรณ์เสริมเพิ่มความเร็วโตรวมสูงสุด +50% ไม่เพิ่มจำนวนถุง ราคาถุง ต้นไม้ และเวลาโตเป็นรายงานของชุมชน Kefir ไม่ได้ประกาศเวลาโตอย่างเป็นทางการ ควรจับเวลาต้นจริงของเซิร์ฟเวอร์ก่อนลงทุน ทุกอย่างถูกลบตอน Federal Raid (wipe) ทุก 7 วัน เว็บแฟนเมด ไม่เกี่ยวข้องกับ Kefir</p>
+</div>
+<script>
+const $=s=>document.querySelector(s),fmt=n=>"$"+Math.round(n).toLocaleString("en-US");
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const run=ld("robrun_run_v1",{}),BON=[0,0,5,10,15,25];
+let S=Object.assign({room:0,tbl:6,town:0,fan:1,pump:1,uv:1,res:1,pl:36,bg:3,bp:6000,nt:BON[run.not||1],bush:20000,opp:1,cy:90,day:1,hd:4},ld("robrun_weed_v1",{}));
+const money=()=>{const v=run.v||{};return(+v.hd||0)+(+v.hc||0)};
+const UP={fan:[.12,25000,100000],pump:[.14,70000,200000],uv:[.24,250000,500000]};
+["fan","pump","uv"].forEach(k=>$("#"+k).innerHTML='<option value="0">ไม่ใช้</option><option value="1">ใช้ (ซื้อ + วิจัย)</option><option value="2">ใช้ (มีแล้ว)</option>');
+$("#day").innerHTML=[1,2,3,4,5,6,7].map(d=>`<option value="${d}">วันที่ ${d} (เหลือ ${8-d} วัน)</option>`).join("");
+function put(){Object.keys(S).forEach(k=>{const e=$("#"+k);if(e)e.type==="checkbox"?e.checked=!!S[k]:e.value=S[k]})}
+function get(){Object.keys(S).forEach(k=>{const e=$("#"+k);if(e)S[k]=e.type==="checkbox"?(e.checked?1:0):+e.value||0})}
+function calc(){get();S.tbl=Math.max(1,Math.min(6,S.tbl));S.town=Math.min(S.town,S.tbl);const m=money(),maxPl=S.tbl*6;S.pl=Math.max(1,Math.min(S.pl,maxPl));
+ try{localStorage.setItem("robrun_weed_v1",JSON.stringify(S))}catch(e){}
+ $("#hmv").textContent=fmt(m);
+ const part=(n,buy,rs,count)=>({n,buy:buy*count,rs:S.res?rs*count:0,c:count}),L=[];
+ if(!S.room){L.push(part("Grow Room",100000,150000,1))}
+ const tn=S.tbl-S.town;if(tn>0)L.push({n:"Grow Table ×"+tn,buy:40000*tn,rs:S.res&&!S.town?30000:0});
+ ["fan","pump","uv"].forEach(k=>{if(S[k]==1)L.push({n:{fan:"Fan",pump:"Water Pump",uv:"UV Lamp"}[k],buy:UP[k][1],rs:S.res?UP[k][2]:0})});
+ const setup=L.reduce((s,x)=>s+x.buy+x.rs,0),opp=S.opp?S.pl*S.bush:0;
+ const sp=1+["fan","pump","uv"].reduce((s,k)=>s+(+S[k]?UP[k][0]:0),0),cyMin=S.cy/sp,days=8-S.day,hrs=days*24;
+ const cycles=Math.max(0,Math.min(Math.floor(hrs*60/cyMin),S.hd*days)),bonus=1+S.nt/100;
+ const per=S.pl*S.bg*S.bp*bonus,rev=per*cycles,net=rev-setup-opp,be=per?Math.ceil((setup+opp)/per):0;
+ $("#stats").innerHTML=`<div class="stat"><b>${fmt(per)}</b><span>รายได้ต่อรอบเก็บเกี่ยว (${S.pl} ต้น)</span></div><div class="stat"><b>${fmt(setup)}</b><span>ค่าติดตั้ง${S.res?" (รวมวิจัย)":""}</span></div><div class="stat ${net>=0?"okb":"big"}"><b>${net<0?"−":""}${fmt(Math.abs(net))}</b><span>กำไรสุทธิก่อน wipe</span></div><div class="stat"><b>${be} รอบ</b><span>จุดคุ้มทุน (${(be*cyMin/60).toFixed(1)} ชม. ปลูก)</span></div>`;
+ $("#out").innerHTML=`<h3>รายละเอียด</h3><table><tr><th>รายการ</th><th>ซื้อ</th><th>วิจัย</th></tr>${L.map(x=>`<tr><td>${x.n}</td><td>${fmt(x.buy)}</td><td>${fmt(x.rs)}</td></tr>`).join("")||'<tr><td colspan="3">ไม่มีค่าติดตั้ง</td></tr>'}<tr><td><b>รวมติดตั้ง</b></td><td colspan="2"><b>${fmt(setup)}</b></td></tr><tr><td>มูลค่าต้นไม้ ${S.pl} ต้น${S.opp?"":" (ไม่นับ)"}</td><td colspan="2">${fmt(S.pl*S.bush)}</td></tr></table>
+ <p class="msg">ความเร็วโตรวม <b>+${Math.round((sp-1)*100)}%</b> → รอบละ <b>${cyMin.toFixed(0)}</b> นาที · เหลือเวลา ${hrs} ชม. เก็บเกี่ยวได้ <b>${cycles}</b> รอบ (รายได้รวม <b>${fmt(rev)}</b>)</p>
+ <p class="msg ${m>=setup?"good":"bad"}">${m>=setup?"เงินที่บ้านพอจ่ายค่าติดตั้ง เหลือ "+fmt(m-setup):"เงินที่บ้านไม่พอ ขาดอีก "+fmt(setup-m)}</p>
+ ${net<0?'<p class="msg bad">ตามตัวเลขนี้ยังไม่คุ้มก่อน wipe ลองสร้างให้เร็วขึ้น ลดอุปกรณ์เสริม หรือเพิ่มจำนวนต้น</p>':""}
+ ${S.pl*S.bush>rev&&S.opp?'<p class="msg bad">รายได้ทั้งหมดน้อยกว่าราคาที่ขายต้นไม้ให้ Smuggler ตรงๆ</p>':""}`;
+ const sc=[["แย่สุด (2 ถุง Uncommon)",2,4000],["กลาง (3 ถุง Epic)",3,6000],["ดีสุด (4 ถุง Legendary)",4,8000]];
+ $("#sc").innerHTML=`<h3>เทียบสถานการณ์ (${S.pl} ต้น · โบนัส ${S.nt}%)</h3><table><tr><th>กรณี</th><th>ต่อรอบ</th><th>ต่อวัน</th><th>ก่อน wipe</th><th>สุทธิ</th></tr>${sc.map(([n,b,p])=>{const pr=S.pl*b*p*bonus,cd=Math.min(S.hd,24*60/cyMin);return `<tr><td>${n}</td><td>${fmt(pr)}</td><td>${fmt(pr*cd)}</td><td>${fmt(pr*cycles)}</td><td class="${pr*cycles-setup-opp>=0?"good":"bad"}">${fmt(pr*cycles-setup-opp)}</td></tr>`}).join("")}</table>`}
+document.addEventListener("input",calc);document.addEventListener("change",calc);addEventListener("focus",()=>{Object.assign(run,ld("robrun_run_v1",{}));calc()});
+put();calc();put();
+</script>
+ <script src="storage-manager.js"></script>
+</body>
+</html>
