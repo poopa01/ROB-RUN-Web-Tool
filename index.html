@@ -67,11 +67,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pg{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:14px}
 .pgt{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mu);font-weight:600;font-size:14px;white-space:nowrap}
 .pgt:hover{color:var(--tx)}.pgt.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.pg{flex-wrap:wrap}.money{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;background:var(--card);border:2px solid var(--ok);border-radius:14px;padding:6px 16px;text-decoration:none;color:var(--tx)}.money small{font-size:12px;color:var(--mu)}.money b{font-size:24px;color:var(--ok)}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="top"><nav class="pg"><a class="pgt on" aria-current="page">📋 Collection Tracker</a><a class="pgt" href="rob-run-planner.html">💰 Run Planner</a></nav></header>
+<header class="top"><nav class="pg"><a class="pgt on" aria-current="page">📋 Collection Tracker</a><a class="pgt" href="rob-run-planner.html">💰 Run Planner</a><a class="pgt" href="rob-run-goals.html">🎯 Goals</a><a class="pgt" href="rob-run-weed.html">🌿 Weed Calc</a><a class="pgt" href="rob-run-wiki.html">📖 Item Wiki</a></nav><a class="money" href="rob-run-planner.html" title="กดเพื่อแก้เงินที่บ้านใน Run Planner"><small>🏠 เงินที่บ้าน</small><b id="hmv">$0</b></a></header>
 <h1>🎭 ROB RUN Collection Tracker</h1>
 <p class="sub">ติ๊กไอเทมที่คุณมี เลือกชุดที่อยู่บน Collection Table ตอนนี้ และดูว่าชุดไหนพร้อม Pack ส่ง Smuggler แล้ว (บันทึกในเบราว์เซอร์อัตโนมัติ)</p>
 
@@ -258,5 +259,6 @@ document.addEventListener("drop",e=>{const u=e.target.closest("[data-up]");if(!u
 setInterval(tick,1000);tick();view();
 </script>
  <script src="storage-manager.js"></script>
+<script>(()=>{const f=()=>{try{const v=JSON.parse(localStorage.getItem("robrun_run_v1")||"{}").v||{};document.getElementById("hmv").textContent="$"+Math.round((+v.hd||0)+(+v.hc||0)).toLocaleString("en-US")}catch(e){}};f();addEventListener("storage",f);addEventListener("focus",f)})()</script>
 </body>
 </html>
